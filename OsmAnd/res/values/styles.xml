@@ -553,4 +553,30 @@
         <item name="backgroundTint">?attr/active_color_primary</item>
         <item name="android:textColor">?attr/slider_label_text_dark</item>
     </style>
+
+    <!-- Hawsa Magellan - Custom Dark Theme -->
+    <style name="AppTheme" parent="OsmandDarkTheme">
+        <item name="android:windowBackground">@color/hawsa_bg_dark</item>
+        <item name="android:statusBarColor">#0A1628</item>
+        <item name="android:navigationBarColor">#0A1628</item>
+        <item name="colorPrimary">#FFD700</item>
+        <item name="colorPrimaryDark">#0A1628</item>
+        <item name="colorAccent">#FFD700</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textColorSecondary">#AAAAAA</item>
+        <item name="android:textColorHint">#AAAAAA</item>
+        <item name="actionBarStyle">@style/HawsaActionBarStyle</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="HawsaActionBarStyle" parent="Widget.MaterialComponents.ActionBar.Solid">
+        <item name="background">#0A1628</item>
+        <item name="titleTextStyle">@style/HawsaActionBarTitle</item>
+    </style>
+
+    <style name="HawsaActionBarTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">#FFD700</item>
+        <item name="android:textSize">18sp</item>
+    </style>
 </resources>
