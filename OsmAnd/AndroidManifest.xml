@@ -89,6 +89,33 @@
 		android:hasFragileUserData="true" android:requestLegacyExternalStorage="true"
 		android:localeConfig="@xml/locales_config">
 
+<!-- Hawsa Magellan Activities -->
+
+<activity
+    android:name="net.osmand.plus.hawsa.HawsaMainActivity"
+    android:screenOrientation="portrait"
+    android:theme="@style/AppTheme">
+    <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+    </intent-filter>
+</activity>
+
+<activity
+    android:name="net.osmand.plus.hawsa.TideActivity"
+    android:screenOrientation="portrait"
+    android:theme="@style/AppTheme" />
+
+<activity
+    android:name="net.osmand.plus.hawsa.MoonActivity"
+    android:screenOrientation="portrait"
+    android:theme="@style/AppTheme" />
+
+<activity
+    android:name="net.osmand.plus.hawsa.CompassActivity"
+    android:screenOrientation="portrait"
+    android:theme="@style/AppTheme" />
+		
 		<property android:name="android.window.PROPERTY_COMPAT_ALLOW_RESTRICTED_RESIZABILITY" android:value="true" />
 
 		<meta-data android:name="com.google.android.backup.api_key" android:value="AEdPqrEAAAAIqF3tNGT66etVBn_vgzpfAY1wmIzKV1Ss6Ku-2A" />
@@ -139,13 +166,6 @@
 				<action android:name="android.intent.action.SEND_MULTIPLE" />
 				<category android:name="android.intent.category.DEFAULT" />
 				<data android:mimeType="application/gpx+xml" />
-			</intent-filter>
-
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
-				<category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
-				<category android:name="android.intent.category.APP_MAPS" />
 			</intent-filter>
 
 			<!-- Open osmand.net/go links in OsmAnd app by default (without showing chooser dialog). -->
