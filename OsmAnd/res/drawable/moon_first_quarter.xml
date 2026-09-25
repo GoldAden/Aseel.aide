@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Dark base circle -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#222244" />
+            <stroke android:width="2dp" android:color="#555577" />
+            <size android:width="100dp" android:height="100dp" />
+        </shape>
+    </item>
+    <!-- Right half lit -->
+    <item
+        android:top="2dp"
+        android:bottom="2dp"
+        android:right="2dp"
+        android:left="48dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#EEEECC" />
+            <corners android:topRightRadius="49dp" android:bottomRightRadius="49dp" />
+            <size android:width="50dp" android:height="96dp" />
+        </shape>
+    </item>
+</layer-list>
