@@ -5846,7 +5846,9 @@ Download tile maps directly, or copy them as SQLite database files to OsmAnd\'s 
     <string name="routing_attr_freeride_policy_description">\'Freeride\' and \'Off-piste\' are unofficial routes and passages. Typically ungroomed, unmaintained and not checked in the evening. Enter at your own risk.</string>
 
 	<!-- Hawsa Magellan - Arabic Strings -->
-<string name="hawsa_app_name">الحسوة ماجلان</string>
+<string name="hawsa_app_title">الحسوة ماجلان</string>
+<string name="hawsa_designer_credit">تم تصميم هذا التطبيق من قبل أصيل صادق</string>
+	<string name="hawsa_app_name">الحسوة ماجلان</string>
 <string name="hawsa_map">الخريطة</string>
 <string name="hawsa_tide">المد والجزر</string>
 <string name="hawsa_moon">القمر</string>
