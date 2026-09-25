@@ -249,6 +249,7 @@ dependencies {
 	huaweiImplementation 'com.huawei.hms:iap:6.4.0.301'
 	huaweiImplementation 'com.huawei.hms:appservice:6.8.0.300'
 
+		implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 	coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.3")
 }
 
