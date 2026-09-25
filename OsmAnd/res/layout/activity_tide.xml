@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#0A1628"
+    android:padding="16dp">
+
+    <!-- Top Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
+
+        <ImageView
+            android:id="@+id/btn_tide_back"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="Back"
+            android:padding="4dp"
+            app:tint="#FFD700" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/hawsa_tide"
+            android:textSize="22sp"
+            android:textColor="#FFD700"
+            android:textStyle="bold"
+            android:gravity="center" />
+
+        <View
+            android:layout_width="36dp"
+            android:layout_height="36dp" />
+    </LinearLayout>
+
+    <!-- Date -->
+    <TextView
+        android:id="@+id/tv_tide_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="#AAAAAA"
+        android:gravity="center"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Next Tide Event -->
+    <TextView
+        android:id="@+id/tv_next_tide"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="#00BFFF"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Tide Chart -->
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/tide_chart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#0A1628" />
+
+    <!-- Legend -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="8dp">
+
+        <View
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="#00BFFF" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" مستوى المد والجزر (متر)"
+            android:textSize="12sp"
+            android:textColor="#AAAAAA"
+            android:layout_marginStart="4dp" />
+    </LinearLayout>
+
+</LinearLayout>
