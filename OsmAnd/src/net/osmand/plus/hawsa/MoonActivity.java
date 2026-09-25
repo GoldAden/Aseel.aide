@@ -1,10 +1,7 @@
 package net.osmand.plus.hawsa;
 
 import android.content.pm.ActivityInfo;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
