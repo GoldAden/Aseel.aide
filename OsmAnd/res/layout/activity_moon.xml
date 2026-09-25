@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0A1628"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Top Bar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <ImageView
+                android:id="@+id/btn_moon_back"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_arrow_back"
+                android:contentDescription="Back"
+                android:padding="4dp"
+                app:tint="#FFD700" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/hawsa_moon"
+                android:textSize="22sp"
+                android:textColor="#FFD700"
+                android:textStyle="bold"
+                android:gravity="center" />
+
+            <View
+                android:layout_width="36dp"
+                android:layout_height="36dp" />
+        </LinearLayout>
+
+        <!-- Current Moon Phase Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="#1A2E4A"
+            android:layout_marginBottom="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="20dp">
+
+                <ImageView
+                    android:id="@+id/iv_moon_icon"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/moon_full"
+                    android:contentDescription="Moon phase" />
+
+                <TextView
+                    android:id="@+id/tv_moon_phase"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:layout_marginTop="12dp" />
+
+                <TextView
+                    android:id="@+id/tv_moon_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="#AAAAAA"
+                    android:layout_marginTop="4dp" />
+
+                <TextView
+                    android:id="@+id/tv_illumination"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="#00BFFF"
+                    android:layout_marginTop="2dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Date Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#1A2E4A"
+            android:layout_marginBottom="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="التاريخ"
+                    android:textSize="16sp"
+                    android:textColor="#FFD700"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/tv_hijri_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/tv_gregorian_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="#AAAAAA" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 7-day Forecast -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="توقعات القمر لـ 7 أيام"
+            android:textSize="16sp"
+            android:textColor="#FFD700"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <!-- Day 0 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="4dp">
+                <TextView android:id="@+id/tv_day_0" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="10sp" android:textColor="#AAAAAA" />
+                <ImageView android:id="@+id/iv_day_moon_0" android:layout_width="28dp" android:layout_height="28dp" android:src="@drawable/moon_full" android:contentDescription="Moon" />
+            </LinearLayout>
+
+            <!-- Day 1 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="4dp">
+                <TextView android:id="@+id/tv_day_1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="10sp" android:textColor="#AAAAAA" />
+                <ImageView android:id="@+id/iv_day_moon_1" android:layout_width="28dp" android:layout_height="28dp" android:src="@drawable/moon_full" android:contentDescription="Moon" />
+            </LinearLayout>
+
+            <!-- Day 2 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="4dp">
+                <TextView android:id="@+id/tv_day_2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="10sp" android:textColor="#AAAAAA" />
+                <ImageView android:id="@+id/iv_day_moon_2" android:layout_width="28dp" android:layout_height="28dp" android:src="@drawable/moon_full" android:contentDescription="Moon" />
+            </LinearLayout>
+
+            <!-- Day 3 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="4dp">
+                <TextView android:id="@+id/tv_day_3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="10sp" android:textColor="#AAAAAA" />
+                <ImageView android:id="@+id/iv_day_moon_3" android:layout_width="28dp" android:layout_height="28dp" android:src="@drawable/moon_full" android:contentDescription="Moon" />
+            </LinearLayout>
+
+            <!-- Day 4 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="4dp">
+                <TextView android:id="@+id/tv_day_4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="10sp" android:textColor="#AAAAAA" />
+                <ImageView android:id="@+id/iv_day_moon_4" android:layout_width="28dp" android:layout_height="28dp" android:src="@drawable/moon_full" android:contentDescription="Moon" />
+            </LinearLayout>
+
+            <!-- Day 5 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="4dp">
+                <TextView android:id="@+id/tv_day_5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="10sp" android:textColor="#AAAAAA" />
+                <ImageView android:id="@+id/iv_day_moon_5" android:layout_width="28dp" android:layout_height="28dp" android:src="@drawable/moon_full" android:contentDescription="Moon" />
+            </LinearLayout>
+
+            <!-- Day 6 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="4dp">
+                <TextView android:id="@+id/tv_day_6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="10sp" android:textColor="#AAAAAA" />
+                <ImageView android:id="@+id/iv_day_moon_6" android:layout_width="28dp" android:layout_height="28dp" android:src="@drawable/moon_full" android:contentDescription="Moon" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
