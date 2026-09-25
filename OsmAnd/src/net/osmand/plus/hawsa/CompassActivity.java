@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.util.AttributeSet;
 import android.hardware.GeomagneticField;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -343,6 +344,16 @@ public class CompassActivity extends Activity implements SensorEventListener, Lo
             init();
         }
 
+      public CompassView(Context context, AttributeSet attrs) {
+    super(context, attrs);
+    init();
+}
+
+public CompassView(Context context, AttributeSet attrs, int defStyleAttr) {
+    super(context, attrs, defStyleAttr);
+    init();
+}  
+        
         private void init() {
             circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             circlePaint.setStyle(Paint.Style.STROKE);
