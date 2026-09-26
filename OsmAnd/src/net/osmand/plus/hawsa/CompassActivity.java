@@ -1,7 +1,7 @@
 package net.osmand.plus.hawsa;
 
 import android.Manifest;
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
@@ -34,8 +34,7 @@ import java.util.GregorianCalendar;
 import java.util.SimpleTimeZone;
 import java.util.TimeZone;
 
-public class CompassActivity extends Activity implements SensorEventListener, LocationListener {
-
+public class CompassActivity extends AppCompatActivity implements SensorEventListener, LocationListener {
     private SensorManager sensorManager;
     private Sensor accelerometer;
     private Sensor magnetometer;
