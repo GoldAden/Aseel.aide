@@ -10,13 +10,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-
 import net.osmand.plus.R;
 
 import java.text.SimpleDateFormat;
@@ -27,7 +20,7 @@ import java.util.Locale;
 
 public class TideActivity extends AppCompatActivity {
 
-    private LineChart chart;
+    private TideChartView chart;
     private TextView tvDate;
     private TextView tvNextTide;
 
@@ -61,42 +54,9 @@ public class TideActivity extends AppCompatActivity {
         tvDate = findViewById(R.id.tv_tide_date);
         tvNextTide = findViewById(R.id.tv_next_tide);
 
-        setupChart();
         calculateAndDisplayTide();
 
         findViewById(R.id.btn_tide_back).setOnClickListener(v -> finish());
-    }
-
-    private void setupChart() {
-        chart.setTouchEnabled(true);
-        chart.setDragEnabled(true);
-        chart.setPinchZoom(true);
-        chart.getDescription().setEnabled(false);
-        chart.setBackgroundColor(Color.parseColor("#0A1628"));
-
-        XAxis xAxis = chart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextColor(Color.parseColor("#AAAAAA"));
-        xAxis.setDrawGridLines(true);
-        xAxis.setGridColor(Color.parseColor("#1A2E4A"));
-        xAxis.setGranularity(2f);
-        xAxis.setValueFormatter(new com.github.mikephil.charting.formatter.ValueFormatter() {
-            @Override
-            public String getFormattedValue(float value) {
-                int hour = (int) value;
-                return String.format(Locale.getDefault(), "%02d:00", hour);
-            }
-        });
-
-        YAxis leftAxis = chart.getAxisLeft();
-        leftAxis.setTextColor(Color.parseColor("#AAAAAA"));
-        leftAxis.setDrawGridLines(true);
-        leftAxis.setGridColor(Color.parseColor("#1A2E4A"));
-        leftAxis.setAxisMinimum(-1.5f);
-        leftAxis.setAxisMaximum(2.5f);
-
-        chart.getAxisRight().setEnabled(false);
-        chart.getLegend().setEnabled(false);
     }
 
     private void calculateAndDisplayTide() {
@@ -104,27 +64,20 @@ public class TideActivity extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy", new Locale("ar"));
         tvDate.setText(dateFormat.format(now.getTime()));
 
-        List<Entry> entries = new ArrayList<>();
         double hoursSinceEpoch = now.getTimeInMillis() / 3600000.0;
+        int currentHour = now.get(Calendar.HOUR_OF_DAY);
+
+        List<Float> hourList = new ArrayList<>();
+        List<Float> heightList = new ArrayList<>();
 
         for (int h = 0; h <= 24; h++) {
-            double t = hoursSinceEpoch - (now.get(Calendar.HOUR_OF_DAY)) + h;
+            double t = hoursSinceEpoch - currentHour + h;
             double height = calculateTideHeight(t);
-            entries.add(new Entry(h, (float) height));
+            hourList.add((float) h);
+            heightList.add((float) height);
         }
 
-        LineDataSet dataSet = new LineDataSet(entries, "");
-        dataSet.setColor(Color.parseColor("#00BFFF"));
-        dataSet.setFillColor(Color.parseColor("#004080"));
-        dataSet.setFillAlpha(80);
-        dataSet.setDrawFilled(true);
-        dataSet.setDrawCircles(false);
-        dataSet.setLineWidth(2.5f);
-        dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-
-        LineData lineData = new LineData(dataSet);
-        chart.setData(lineData);
-        chart.invalidate();
+        chart.setData(hourList, heightList);
 
         findNextTideEvent(now);
     }
