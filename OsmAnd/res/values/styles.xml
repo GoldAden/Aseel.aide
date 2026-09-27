@@ -160,7 +160,7 @@
         <item name="android:textColor">@color/text_color_primary_dark</item>
     </style>
 
-    <style name="Widget.Styled.LightActionBarSubtitle" parent="TextAppearance.AppCompat.Subtitle">
+    <style name="Widget.Styled.LightActionBarSubtitle" parent="TextAppearance.AppCompat.Subhead">
         <item name="android:textColor">@color/white_80_transparent</item>
     </style>
 
