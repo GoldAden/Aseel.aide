@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0A1628"
+    android:background="@color/hawsa_bg_dark"
     android:fillViewport="true">
 
     <LinearLayout
@@ -27,7 +27,7 @@
                 android:src="@drawable/ic_arrow_back"
                 android:contentDescription="Back"
                 android:padding="4dp"
-                app:tint="#FFD700" />
+                app:tint="@color/hawsa_gold" />
 
             <TextView
                 android:layout_width="0dp"
@@ -35,7 +35,7 @@
                 android:layout_weight="1"
                 android:text="@string/hawsa_compass"
                 android:textSize="22sp"
-                android:textColor="#FFD700"
+                android:textColor="@color/hawsa_gold"
                 android:textStyle="bold"
                 android:gravity="center" />
 
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="16dp"
             app:cardElevation="6dp"
-            app:cardBackgroundColor="#1A2E4A"
+            app:cardBackgroundColor="@color/hawsa_card_dark"
             android:layout_marginBottom="12dp">
 
             <LinearLayout
@@ -70,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/palette_neutral_100"
                     android:textStyle="bold"
                     android:layout_marginTop="8dp" />
 
@@ -79,7 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
-                    android:textColor="#00FF88"
+                    android:textColor="@color/hawsa_green"
                     android:layout_marginTop="4dp" />
 
             </LinearLayout>
@@ -91,7 +91,7 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp"
-            app:cardBackgroundColor="#1A2E4A"
+            app:cardBackgroundColor="@color/hawsa_card_dark"
             android:layout_marginBottom="8dp">
 
             <LinearLayout
@@ -105,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/hawsa_prayer_times"
                     android:textSize="18sp"
-                    android:textColor="#FFD700"
+                    android:textColor="@color/hawsa_gold"
                     android:textStyle="bold"
                     android:layout_marginBottom="12dp" />
 
@@ -123,14 +123,14 @@
                         android:layout_weight="1"
                         android:text="@string/hawsa_fajr"
                         android:textSize="15sp"
-                        android:textColor="#AAAAAA" />
+                        android:textColor="@color/palette_neutral_85" />
 
                     <TextView
                         android:id="@+id/tv_fajr_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/palette_neutral_100"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -148,14 +148,14 @@
                         android:layout_weight="1"
                         android:text="@string/hawsa_sunrise"
                         android:textSize="15sp"
-                        android:textColor="#AAAAAA" />
+                        android:textColor="@color/palette_neutral_85" />
 
                     <TextView
                         android:id="@+id/tv_sunrise_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:textColor="#FFAA33"
+                        android:textColor="@color/hawsa_orange"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -173,14 +173,14 @@
                         android:layout_weight="1"
                         android:text="@string/hawsa_dhuhr"
                         android:textSize="15sp"
-                        android:textColor="#AAAAAA" />
+                        android:textColor="@color/palette_neutral_85" />
 
                     <TextView
                         android:id="@+id/tv_dhuhr_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/palette_neutral_100"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -198,14 +198,14 @@
                         android:layout_weight="1"
                         android:text="@string/hawsa_asr"
                         android:textSize="15sp"
-                        android:textColor="#AAAAAA" />
+                        android:textColor="@color/palette_neutral_85" />
 
                     <TextView
                         android:id="@+id/tv_asr_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/palette_neutral_100"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -223,14 +223,14 @@
                         android:layout_weight="1"
                         android:text="@string/hawsa_maghrib"
                         android:textSize="15sp"
-                        android:textColor="#AAAAAA" />
+                        android:textColor="@color/palette_neutral_85" />
 
                     <TextView
                         android:id="@+id/tv_maghrib_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:textColor="#FFAA33"
+                        android:textColor="@color/hawsa_orange"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -247,14 +247,14 @@
                         android:layout_weight="1"
                         android:text="@string/hawsa_isha"
                         android:textSize="15sp"
-                        android:textColor="#AAAAAA" />
+                        android:textColor="@color/palette_neutral_85" />
 
                     <TextView
                         android:id="@+id/tv_isha_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:textColor="#00BFFF"
+                        android:textColor="@color/hawsa_blue"
                         android:textStyle="bold" />
                 </LinearLayout>
 

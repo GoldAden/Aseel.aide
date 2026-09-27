@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#0A1628"
+    android:background="@color/hawsa_bg_dark"
     android:gravity="center_horizontal"
     android:padding="16dp">
 
@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:text="@string/hawsa_app_title"
         android:textSize="32sp"
-        android:textColor="#FFD700"
+        android:textColor="@color/hawsa_gold"
         android:textStyle="bold"
         android:fontFamily="sans-serif-medium"
         android:layout_marginTop="32dp"
@@ -29,7 +29,7 @@
     <View
         android:layout_width="200dp"
         android:layout_height="2dp"
-        android:background="#FFD700"
+        android:background="@color/hawsa_gold"
         android:layout_marginBottom="24dp" />
 
     <!-- Grid of 4 cards -->
@@ -60,7 +60,7 @@
                 android:layout_marginEnd="6dp"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="8dp"
-                app:cardBackgroundColor="#1A2E4A">
+                app:cardBackgroundColor="@color/hawsa_card_dark">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -80,7 +80,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/hawsa_map"
                         android:textSize="16sp"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/palette_neutral_100"
                         android:textStyle="bold"
                         android:layout_marginTop="8dp" />
                 </LinearLayout>
@@ -95,7 +95,7 @@
                 android:layout_marginStart="6dp"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="8dp"
-                app:cardBackgroundColor="#1A2E4A">
+                app:cardBackgroundColor="@color/hawsa_card_dark">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -115,7 +115,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/hawsa_tide"
                         android:textSize="16sp"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/palette_neutral_100"
                         android:textStyle="bold"
                         android:layout_marginTop="8dp" />
                 </LinearLayout>
@@ -140,7 +140,7 @@
                 android:layout_marginEnd="6dp"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="8dp"
-                app:cardBackgroundColor="#1A2E4A">
+                app:cardBackgroundColor="@color/hawsa_card_dark">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -160,7 +160,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/hawsa_moon"
                         android:textSize="14sp"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/palette_neutral_100"
                         android:textStyle="bold"
                         android:layout_marginTop="8dp" />
                 </LinearLayout>
@@ -175,7 +175,7 @@
                 android:layout_marginStart="6dp"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="8dp"
-                app:cardBackgroundColor="#1A2E4A">
+                app:cardBackgroundColor="@color/hawsa_card_dark">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -195,7 +195,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/hawsa_compass"
                         android:textSize="14sp"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/palette_neutral_100"
                         android:textStyle="bold"
                         android:layout_marginTop="8dp" />
                 </LinearLayout>
@@ -210,7 +210,7 @@
         android:layout_height="wrap_content"
         android:text="@string/hawsa_designer_credit"
         android:textSize="13sp"
-        android:textColor="#AAAAAA"
+        android:textColor="@color/palette_neutral_85"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp" />
 
