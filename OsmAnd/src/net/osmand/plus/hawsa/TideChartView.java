@@ -2,14 +2,17 @@ package net.osmand.plus.hawsa;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.core.content.ContextCompat;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import net.osmand.plus.R;
 
 public class TideChartView extends View {
 
@@ -48,42 +51,50 @@ public class TideChartView extends View {
     }
 
     private void init() {
+        int bgColor = ContextCompat.getColor(getContext(), R.color.hawsa_bg_dark);
+        int cardColor = ContextCompat.getColor(getContext(), R.color.hawsa_card_dark);
+        int goldColor = ContextCompat.getColor(getContext(), R.color.hawsa_gold);
+        int blueColor = ContextCompat.getColor(getContext(), R.color.hawsa_blue);
+        int greenColor = ContextCompat.getColor(getContext(), R.color.hawsa_green);
+        int orangeColor = ContextCompat.getColor(getContext(), R.color.hawsa_orange);
+        int neutral85 = ContextCompat.getColor(getContext(), R.color.palette_neutral_85);
+
         bgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        bgPaint.setColor(Color.parseColor("#0A1628"));
+        bgPaint.setColor(bgColor);
         bgPaint.setStyle(Paint.Style.FILL);
 
         gridPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        gridPaint.setColor(Color.parseColor("#1A2E4A"));
+        gridPaint.setColor(cardColor);
         gridPaint.setStyle(Paint.Style.STROKE);
         gridPaint.setStrokeWidth(1f);
 
         axisTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        axisTextPaint.setColor(Color.parseColor("#AAAAAA"));
+        axisTextPaint.setColor(neutral85);
         axisTextPaint.setTextSize(24f);
         axisTextPaint.setTextAlign(Paint.Align.CENTER);
 
         curvePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        curvePaint.setColor(Color.parseColor("#00BFFF"));
+        curvePaint.setColor(blueColor);
         curvePaint.setStyle(Paint.Style.STROKE);
         curvePaint.setStrokeWidth(3f);
 
         fillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        fillPaint.setColor(Color.parseColor("#004080"));
+        fillPaint.setColor(cardColor);
         fillPaint.setStyle(Paint.Style.FILL);
         fillPaint.setAlpha(80);
 
         highTidePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        highTidePaint.setColor(Color.parseColor("#00FF88"));
+        highTidePaint.setColor(greenColor);
         highTidePaint.setStyle(Paint.Style.FILL);
         highTidePaint.setTextSize(20f);
 
         lowTidePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        lowTidePaint.setColor(Color.parseColor("#FFAA33"));
+        lowTidePaint.setColor(orangeColor);
         lowTidePaint.setStyle(Paint.Style.FILL);
         lowTidePaint.setTextSize(20f);
 
         currentLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        currentLinePaint.setColor(Color.parseColor("#FFD700"));
+        currentLinePaint.setColor(goldColor);
         currentLinePaint.setStyle(Paint.Style.STROKE);
         currentLinePaint.setStrokeWidth(1.5f);
     }
@@ -145,7 +156,7 @@ public class TideChartView extends View {
         // Draw zero line
         float zeroY = paddingTop + chartH * (1 - (0 - minHeight) / (maxHeight - minHeight));
         Paint zeroPaint = new Paint(gridPaint);
-        zeroPaint.setColor(Color.parseColor("#AAAAAA"));
+        zeroPaint.setColor(ContextCompat.getColor(getContext(), R.color.palette_neutral_85));
         zeroPaint.setStrokeWidth(1.5f);
         canvas.drawLine(paddingStart, zeroY, w - paddingEnd, zeroY, zeroPaint);
 
