@@ -1,14 +1,11 @@
 package net.osmand.plus.hawsa;
 
 import android.Manifest;
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.util.AttributeSet;
 import android.hardware.GeomagneticField;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -19,19 +16,19 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import net.osmand.plus.R;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.SimpleTimeZone;
 import java.util.TimeZone;
 
 public class CompassActivity extends AppCompatActivity implements SensorEventListener, LocationListener {
@@ -76,7 +73,6 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        // Views
         compassView = findViewById(R.id.compass_view);
         tvCompassDegree = findViewById(R.id.tv_compass_degree);
         tvQiblaDirection = findViewById(R.id.tv_qibla_direction);
@@ -90,19 +86,13 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
 
         btnCompassBack.setOnClickListener(v -> finish());
 
-        // Sensors
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
-        // Location
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         requestLocation();
-
-        // Calculate Qibla for default location
         calculateQibla();
-
-        // Calculate prayer times
         calculatePrayerTimes();
     }
 
@@ -162,7 +152,6 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
         qiblaBearing = (float) Math.toDegrees(Math.atan2(x, y));
         if (qiblaBearing < 0) qiblaBearing += 360;
 
-        // Declination correction
         GeomagneticField geoField = new GeomagneticField(
                 (float) latitude, (float) longitude, (float) altitude,
                 System.currentTimeMillis());
@@ -174,7 +163,6 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
         tvQiblaDirection.setText(qiblaText);
     }
 
-    // --- Prayer Times Calculation (Simplified Solar Position) ---
     private void calculatePrayerTimes() {
         Calendar now = Calendar.getInstance();
         int year = now.get(Calendar.YEAR);
@@ -204,11 +192,9 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
         double latRad = Math.toRadians(latitude);
         double decRad = Dec;
 
-        // Equation of time correction (simplified)
-        double eqTime = (q - RA) * 4; // in minutes (approximate)
+        double eqTime = (q - RA) * 4;
         double solarNoon = 12 - longitude / 15.0 + timezoneOffset - eqTime / 60.0;
 
-        // Hour angle for sun angle
         double cosH = (Math.sin(Math.toRadians(-0.833)) - Math.sin(latRad) * Math.sin(decRad))
                 / (Math.cos(latRad) * Math.cos(decRad));
         if (cosH > 1) cosH = 1;
@@ -218,7 +204,6 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
         double sunriseTime = solarNoon - H / 15.0;
         double sunsetTime = solarNoon + H / 15.0;
 
-        // Fajr: sun at -18° (Isha), Fajr at -15° — using standard -15 for Fajr
         double cosHFajr = (Math.sin(Math.toRadians(-15)) - Math.sin(latRad) * Math.sin(decRad))
                 / (Math.cos(latRad) * Math.cos(decRad));
         if (cosHFajr > 1) cosHFajr = 1;
@@ -226,7 +211,6 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
         double HFajr = Math.toDegrees(Math.acos(cosHFajr));
         double fajrTime = solarNoon - HFajr / 15.0;
 
-        // Isha: sun at -17°
         double cosHIsha = (Math.sin(Math.toRadians(-17)) - Math.sin(latRad) * Math.sin(decRad))
                 / (Math.cos(latRad) * Math.cos(decRad));
         if (cosHIsha > 1) cosHIsha = 1;
@@ -235,7 +219,7 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
         double ishaTime = solarNoon + HIsha / 15.0;
 
         double dhuhrTime = solarNoon;
-        double asrTime = solarNoon + (H * 0.5) / 15.0; // Shafi'i: shadow = object + shadow at noon
+        double asrTime = solarNoon + (H * 0.5) / 15.0;
         double maghribTime = sunsetTime;
 
         tvFajrTime.setText(formatTime(fajrTime));
@@ -265,7 +249,6 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
         return String.format("%02d:%02d", hour, minute);
     }
 
-    // --- Sensor Handling ---
     @Override
     protected void onResume() {
         super.onResume();
@@ -296,7 +279,6 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
                 float azimuth = (float) Math.toDegrees(orientationValues[0]);
                 if (azimuth < 0) azimuth += 360;
 
-                // Declination correction
                 GeomagneticField geoField = new GeomagneticField(
                         (float) latitude, (float) longitude, (float) altitude,
                         System.currentTimeMillis());
@@ -323,7 +305,6 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
-    // --- Custom Compass View ---
     public static class CompassView extends View {
 
         private float azimuth = 0f;
@@ -343,57 +324,64 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
             init();
         }
 
-      public CompassView(Context context, AttributeSet attrs) {
-    super(context, attrs);
-    init();
-}
+        public CompassView(Context context, AttributeSet attrs) {
+            super(context, attrs);
+            init();
+        }
 
-public CompassView(Context context, AttributeSet attrs, int defStyleAttr) {
-    super(context, attrs, defStyleAttr);
-    init();
-}  
-        
+        public CompassView(Context context, AttributeSet attrs, int defStyleAttr) {
+            super(context, attrs, defStyleAttr);
+            init();
+        }
+
         private void init() {
+            int gold = ContextCompat.getColor(getContext(), R.color.hawsa_gold);
+            int neutral100 = ContextCompat.getColor(getContext(), R.color.palette_neutral_100);
+            int deep = ContextCompat.getColor(getContext(), R.color.hawsa_bg_dark);
+            int green = ContextCompat.getColor(getContext(), R.color.hawsa_green);
+            int softGray = ContextCompat.getColor(getContext(), R.color.palette_neutral_85);
+            int red = ContextCompat.getColor(getContext(), R.color.palette_red_50);
+
             circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             circlePaint.setStyle(Paint.Style.STROKE);
-            circlePaint.setColor(Color.parseColor("#FFD700"));
+            circlePaint.setColor(gold);
             circlePaint.setStrokeWidth(3f);
 
             tickPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             tickPaint.setStyle(Paint.Style.STROKE);
-            tickPaint.setColor(Color.parseColor("#FFD700"));
+            tickPaint.setColor(gold);
             tickPaint.setStrokeWidth(3f);
 
             tickMinorPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             tickMinorPaint.setStyle(Paint.Style.STROKE);
-            tickMinorPaint.setColor(Color.parseColor("#AAAAAA"));
+            tickMinorPaint.setColor(softGray);
             tickMinorPaint.setStrokeWidth(1.5f);
 
             textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            textPaint.setColor(Color.parseColor("#FFFFFF"));
+            textPaint.setColor(neutral100);
             textPaint.setTextSize(36f);
             textPaint.setTextAlign(Paint.Align.CENTER);
             textPaint.setFakeBoldText(true);
 
             needlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            needlePaint.setColor(Color.parseColor("#FF4444"));
+            needlePaint.setColor(red);
             needlePaint.setStyle(Paint.Style.FILL);
 
             needleSouthPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            needleSouthPaint.setColor(Color.parseColor("#FFFFFF"));
+            needleSouthPaint.setColor(neutral100);
             needleSouthPaint.setStyle(Paint.Style.FILL);
 
             qiblaPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            qiblaPaint.setColor(Color.parseColor("#00FF88"));
+            qiblaPaint.setColor(green);
             qiblaPaint.setStyle(Paint.Style.FILL);
 
             qiblaArrowPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            qiblaArrowPaint.setColor(Color.parseColor("#00FF88"));
+            qiblaArrowPaint.setColor(green);
             qiblaArrowPaint.setStyle(Paint.Style.STROKE);
             qiblaArrowPaint.setStrokeWidth(3f);
 
             centerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            centerPaint.setColor(Color.parseColor("#FFD700"));
+            centerPaint.setColor(gold);
             centerPaint.setStyle(Paint.Style.FILL);
         }
 
@@ -415,16 +403,13 @@ public CompassView(Context context, AttributeSet attrs, int defStyleAttr) {
             int cy = h / 2;
             int radius = Math.min(cx, cy) - 16;
 
-            // Draw background circle
             Paint bgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            bgPaint.setColor(Color.parseColor("#0D1B2A"));
+            bgPaint.setColor(ContextCompat.getColor(getContext(), R.color.hawsa_bg_dark));
             bgPaint.setStyle(Paint.Style.FILL);
             canvas.drawCircle(cx, cy, radius, bgPaint);
 
-            // Draw outer ring
             canvas.drawCircle(cx, cy, radius, circlePaint);
 
-            // Draw ticks and labels (rotated by -azimuth so N stays at top)
             canvas.save();
             canvas.rotate(-azimuth, cx, cy);
 
@@ -442,7 +427,6 @@ public CompassView(Context context, AttributeSet attrs, int defStyleAttr) {
                 canvas.rotate(10, cx, cy);
             }
 
-            // Cardinal labels
             float labelR = radius - 48;
             String[] cardinals = {"N", "E", "S", "W"};
             int[] angles = {0, 90, 180, 270};
@@ -452,13 +436,12 @@ public CompassView(Context context, AttributeSet attrs, int defStyleAttr) {
                 float ty = cy - labelR * (float) Math.cos(rad);
                 Paint dirPaint = new Paint(textPaint);
                 if (cardinals[i].equals("N")) {
-                    dirPaint.setColor(Color.parseColor("#FF4444"));
+                    dirPaint.setColor(ContextCompat.getColor(getContext(), R.color.palette_red_50));
                     dirPaint.setTextSize(42f);
                 }
                 canvas.drawText(cardinals[i], tx, ty + dirPaint.getTextSize() / 3, dirPaint);
             }
 
-            // Qibla indicator arrow (rotates with compass)
             float qRad = (float) Math.toRadians(qiblaBearing);
             float qStartR = radius - 55;
             float qEndR = radius - 16;
@@ -468,7 +451,6 @@ public CompassView(Context context, AttributeSet attrs, int defStyleAttr) {
             float qx2 = cx + qEndR * (float) Math.sin(qRad);
             float qy2 = cy - qEndR * (float) Math.cos(qRad);
 
-            // Qibla triangle
             Path qiblaPath = new Path();
             float qTipR = radius - 10;
             float qBaseR = radius - 30;
@@ -489,12 +471,11 @@ public CompassView(Context context, AttributeSet attrs, int defStyleAttr) {
             qiblaPath.close();
             canvas.drawPath(qiblaPath, qiblaPaint);
 
-            // Kaaba label
             float kaabaR = radius - 62;
             float kaabaX = cx + kaabaR * (float) Math.sin(qRad);
             float kaabaY = cy - kaabaR * (float) Math.cos(qRad);
             Paint kaabaPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            kaabaPaint.setColor(Color.parseColor("#00FF88"));
+            kaabaPaint.setColor(ContextCompat.getColor(getContext(), R.color.hawsa_green));
             kaabaPaint.setTextSize(22f);
             kaabaPaint.setTextAlign(Paint.Align.CENTER);
             kaabaPaint.setFakeBoldText(true);
@@ -502,7 +483,6 @@ public CompassView(Context context, AttributeSet attrs, int defStyleAttr) {
 
             canvas.restore();
 
-            // North needle (fixed at top)
             Path northNeedle = new Path();
             northNeedle.moveTo(cx, cy - radius + 32);
             northNeedle.lineTo(cx - 12, cy + 4);
@@ -510,7 +490,6 @@ public CompassView(Context context, AttributeSet attrs, int defStyleAttr) {
             northNeedle.close();
             canvas.drawPath(northNeedle, needlePaint);
 
-            // South needle
             Path southNeedle = new Path();
             southNeedle.moveTo(cx, cy + radius - 32);
             southNeedle.lineTo(cx - 12, cy - 4);
@@ -518,7 +497,6 @@ public CompassView(Context context, AttributeSet attrs, int defStyleAttr) {
             southNeedle.close();
             canvas.drawPath(southNeedle, needleSouthPaint);
 
-            // Center dot
             canvas.drawCircle(cx, cy, 8, centerPaint);
         }
     }
