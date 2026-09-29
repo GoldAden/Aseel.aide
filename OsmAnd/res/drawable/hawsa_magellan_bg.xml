@@ -5,11 +5,19 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
+    <!-- Deep blue base -->
     <path
-        android:fillColor="#FF071A2E"
+        android:fillColor="#FF0A1628"
         android:pathData="M0,0h108v108h-108z" />
 
+    <!-- Soft blue inner circle -->
     <path
-        android:fillColor="#FF0B2942"
-        android:pathData="M54,8A46,46 0,1 0,54 100A46,46 0,1 0,54 8" />
+        android:fillColor="#FF163B59"
+        android:pathData="M54,9A45,45 0,1 0,54 99A45,45 0,1 0,54 9" />
+
+    <!-- Subtle inner highlight -->
+    <path
+        android:fillColor="#FF1E4C6D"
+        android:pathData="M54,17A37,37 0,1 0,54 91A37,37 0,1 0,54 17" />
+
 </vector>
