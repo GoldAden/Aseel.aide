@@ -20,7 +20,7 @@
         <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:src="@drawable/hawsa_majellan_fg"
+            android:src="@drawable/hawsa_magellan_fg"
             android:scaleType="fitCenter"
             android:layout_marginBottom="12dp" />
 
