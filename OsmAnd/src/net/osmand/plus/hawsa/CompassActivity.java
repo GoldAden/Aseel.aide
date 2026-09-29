@@ -68,53 +68,71 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_compass);
+        try {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_compass);
 
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        compassView = findViewById(R.id.compass_view);
-        tvCompassDegree = findViewById(R.id.tv_compass_degree);
-        tvQiblaDirection = findViewById(R.id.tv_qibla_direction);
-        tvFajrTime = findViewById(R.id.tv_fajr_time);
-        tvSunriseTime = findViewById(R.id.tv_sunrise_time);
-        tvDhuhrTime = findViewById(R.id.tv_dhuhr_time);
-        tvAsrTime = findViewById(R.id.tv_asr_time);
-        tvMaghribTime = findViewById(R.id.tv_maghrib_time);
-        tvIshaTime = findViewById(R.id.tv_isha_time);
-        btnCompassBack = findViewById(R.id.btn_compass_back);
+            compassView = findViewById(R.id.compass_view);
+            tvCompassDegree = findViewById(R.id.tv_compass_degree);
+            tvQiblaDirection = findViewById(R.id.tv_qibla_direction);
+            tvFajrTime = findViewById(R.id.tv_fajr_time);
+            tvSunriseTime = findViewById(R.id.tv_sunrise_time);
+            tvDhuhrTime = findViewById(R.id.tv_dhuhr_time);
+            tvAsrTime = findViewById(R.id.tv_asr_time);
+            tvMaghribTime = findViewById(R.id.tv_maghrib_time);
+            tvIshaTime = findViewById(R.id.tv_isha_time);
+            btnCompassBack = findViewById(R.id.btn_compass_back);
 
-        btnCompassBack.setOnClickListener(v -> finish());
+            if (btnCompassBack != null) {
+                btnCompassBack.setOnClickListener(v -> finish());
+            }
 
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+            sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+            if (sensorManager != null) {
+                accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+                magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+            }
 
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        requestLocation();
-        calculateQibla();
-        calculatePrayerTimes();
+            locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            requestLocation();
+            calculateQibla();
+            calculatePrayerTimes();
+        } catch (Exception e) {
+            // Prevent crash - finish gracefully
+            finish();
+        }
     }
 
     private void requestLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            return;
-        }
         try {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+                return;
+            }
             Criteria criteria = new Criteria();
             criteria.setAccuracy(Criteria.ACCURACY_FINE);
             String provider = locationManager.getBestProvider(criteria, true);
             if (provider != null) {
-                locationManager.requestSingleUpdate(provider, this, null);
-                Location lastKnown = locationManager.getLastKnownLocation(provider);
+                try {
+                    locationManager.requestSingleUpdate(provider, this, null);
+                } catch (Exception e) {
+                    // Location request failed
+                }
+                Location lastKnown = null;
+                try {
+                    lastKnown = locationManager.getLastKnownLocation(provider);
+                } catch (Exception e) {
+                    // getLastKnownLocation failed
+                }
                 if (lastKnown != null) {
                     updateLocation(lastKnown);
                 }
             }
         } catch (Exception e) {
-            // Use default Makkah location
+            // Use default Makkah location if anything fails
         }
     }
 
@@ -252,29 +270,42 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
     @Override
     protected void onResume() {
         super.onResume();
-        if (accelerometer != null)
-            sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
-        if (magnetometer != null)
-            sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_UI);
+        try {
+            if (sensorManager != null) {
+                if (accelerometer != null)
+                    sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
+                if (magnetometer != null)
+                    sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_UI);
+            }
+        } catch (Exception e) {
+            // Sensor registration failed
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        sensorManager.unregisterListener(this);
+        try {
+            if (sensorManager != null) {
+                sensorManager.unregisterListener(this);
+            }
+        } catch (Exception e) {
+            // Sensor unregistration failed
+        }
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            gravityValues = lowPass(event.values.clone(), gravityValues);
-        } else if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
-            geomagneticValues = lowPass(event.values.clone(), geomagneticValues);
-        }
+        try {
+            if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+                gravityValues = lowPass(event.values.clone(), gravityValues);
+            } else if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
+                geomagneticValues = lowPass(event.values.clone(), geomagneticValues);
+            }
 
-        if (gravityValues != null && geomagneticValues != null) {
-            boolean success = SensorManager.getRotationMatrix(rotationMatrix, null, gravityValues, geomagneticValues);
-            if (success) {
+            if (gravityValues != null && geomagneticValues != null) {
+                boolean success = SensorManager.getRotationMatrix(rotationMatrix, null, gravityValues, geomagneticValues);
+                if (success) {
                 SensorManager.getOrientation(rotationMatrix, orientationValues);
                 float azimuth = (float) Math.toDegrees(orientationValues[0]);
                 if (azimuth < 0) azimuth += 360;
@@ -290,6 +321,11 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
 
                 tvCompassDegree.setText(String.format("%.0f°", azimuth));
             }
+        }
+    }
+
+        } catch (Exception e) {
+            // Sensor change error
         }
     }
 
