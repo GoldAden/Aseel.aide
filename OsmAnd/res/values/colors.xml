@@ -804,4 +804,5 @@
     <color name="hawsa_blue">#00BFFF</color>
     <color name="hawsa_green">#00FF88</color>
     <color name="hawsa_orange">#FFAA33</color>
+    <color name="hawsa_status_bar_color">#0A1628</color>
 </resources>
