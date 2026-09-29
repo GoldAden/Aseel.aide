@@ -5,53 +5,58 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!-- Compass outer ring -->
+    <!-- Modern compass ring -->
     <path
         android:fillColor="@android:color/transparent"
         android:strokeColor="#FFFFD45A"
-        android:strokeWidth="3"
-        android:pathData="M54,16A38,38 0,1 0,54 92A38,38 0,1 0,54 16" />
+        android:strokeWidth="3.5"
+        android:pathData="M54,18A36,36 0,1 0,54 90A36,36 0,1 0,54 18" />
 
-    <!-- North/South compass needle -->
+    <!-- Main compass needle -->
     <path
         android:fillColor="#FFFFD45A"
-        android:pathData="M54,22L62,54L54,86L46,54Z" />
+        android:pathData="M54,24L62,54L54,84L46,54Z" />
 
-    <!-- East/West compass needle -->
+    <!-- Secondary needle -->
     <path
         android:fillColor="#FFE6B93F"
-        android:pathData="M22,54L54,46L86,54L54,62Z" />
+        android:pathData="M24,54L54,46L84,54L54,62Z" />
 
-    <!-- Center -->
+    <!-- Center circle -->
     <path
         android:fillColor="#FF071A2E"
-        android:pathData="M54,44A10,10 0,1 0,54 64A10,10 0,1 0,54 44" />
+        android:pathData="M54,43A11,11 0,1 0,54 65A11,11 0,1 0,54 43" />
 
+    <!-- Center gold diamond -->
     <path
         android:fillColor="#FFFFD45A"
-        android:pathData="M54,47L57,54L54,61L51,54Z" />
+        android:pathData="M54,47L58,54L54,61L50,54Z" />
 
-    <!-- Four navigation points -->
+    <!-- North marker -->
     <path
         android:fillColor="#FFFFD45A"
-        android:pathData="M54,10L58,19L54,23L50,19Z" />
+        android:pathData="M54,10L58,20L54,24L50,20Z" />
 
+    <!-- East marker -->
     <path
         android:fillColor="#FFFFD45A"
-        android:pathData="M98,54L89,58L85,54L89,50Z" />
+        android:pathData="M98,54L88,58L84,54L88,50Z" />
 
+    <!-- South marker -->
     <path
         android:fillColor="#FFFFD45A"
-        android:pathData="M54,98L50,89L54,85L58,89Z" />
+        android:pathData="M54,98L50,88L54,84L58,88Z" />
 
+    <!-- West marker -->
     <path
         android:fillColor="#FFFFD45A"
-        android:pathData="M10,54L19,50L23,54L19,58Z" />
+        android:pathData="M10,54L20,50L24,54L20,58Z" />
 
-    <!-- Sea wave -->
+    <!-- Minimal sea wave -->
     <path
         android:fillColor="@android:color/transparent"
         android:strokeColor="#FF4FA7C7"
         android:strokeWidth="3"
-        android:pathData="M25,75C32,70 39,82 46,77C53,72 60,84 67,78C74,72 81,82 87,76" />
+        android:pathData="M27,76C34,71 40,81 47,77C54,73 60,83 67,78C74,73 80,82 86,77" />
+
 </vector>
