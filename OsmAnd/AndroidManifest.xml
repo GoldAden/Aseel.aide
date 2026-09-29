@@ -115,7 +115,8 @@
 <activity
     android:name="net.osmand.plus.hawsa.CompassActivity"
     android:screenOrientation="portrait"
-    android:theme="@style/AppTheme" />
+    android:exported="false"
+    android:theme="@style/Theme.HawsaMain" />
 		
 		<property android:name="android.window.PROPERTY_COMPAT_ALLOW_RESTRICTED_RESIZABILITY" android:value="true" />
 
