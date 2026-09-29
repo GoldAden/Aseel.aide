@@ -5,23 +5,29 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
+    <!-- Modern outer compass -->
     <path
         android:fillColor="#FFFFFFFF"
-        android:pathData="M54,16A38,38 0,1 0,54 92A38,38 0,1 0,54 16" />
+        android:pathData="M54,18A36,36 0,1 0,54 90A36,36 0,1 0,54 18" />
 
+    <!-- North/South needle -->
     <path
         android:fillColor="#FF000000"
-        android:pathData="M54,22L62,54L54,86L46,54Z" />
+        android:pathData="M54,24L62,54L54,84L46,54Z" />
 
+    <!-- East/West needle -->
     <path
         android:fillColor="#FF000000"
-        android:pathData="M22,54L54,46L86,54L54,62Z" />
+        android:pathData="M24,54L54,46L84,54L54,62Z" />
 
+    <!-- Center -->
     <path
         android:fillColor="#FFFFFFFF"
-        android:pathData="M54,44A10,10 0,1 0,54 64A10,10 0,1 0,54 44" />
+        android:pathData="M54,43A11,11 0,1 0,54 65A11,11 0,1 0,54 43" />
 
+    <!-- Center diamond -->
     <path
         android:fillColor="#FF000000"
-        android:pathData="M54,47L57,54L54,61L51,54Z" />
+        android:pathData="M54,47L58,54L54,61L50,54Z" />
+
 </vector>
