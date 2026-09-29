@@ -579,4 +579,17 @@
         <item name="android:textColor">@color/hawsa_gold</item>
         <item name="android:textSize">18sp</item>
     </style>
+
+    <!-- Hawsa Majellan Theme -->
+    <style name="Theme.HawsaMain" parent="@style/AppTheme">
+        <item name="android:windowBackground">@color/hawsa_bg_dark</item>
+        <item name="android:statusBarColor">@color/hawsa_bg_dark</item>
+        <item name="android:navigationBarColor">@color/hawsa_bg_dark</item>
+        <item name="android:colorPrimary">@color/hawsa_bg_dark</item>
+        <item name="android:colorPrimaryDark">@color/hawsa_bg_dark</item>
+        <item name="android:colorAccent">@color/hawsa_gold</item>
+        <item name="android:textColorPrimary">@color/palette_neutral_100</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
 </resources>
