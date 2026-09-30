@@ -5,29 +5,61 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!-- Modern outer compass -->
+    <!-- Boat hull -->
     <path
         android:fillColor="#FFFFFFFF"
-        android:pathData="M54,18A36,36 0,1 0,54 90A36,36 0,1 0,54 18" />
+        android:pathData="M26,62 C26,62 32,78 54,78 C76,78 82,62 82,62 L78,56 L30,56 Z" />
 
-    <!-- North/South needle -->
+    <!-- Mast pole (no sail) -->
     <path
-        android:fillColor="#FF000000"
-        android:pathData="M54,24L62,54L54,84L46,54Z" />
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.5"
+        android:pathData="M54,56 L54,28" />
 
-    <!-- East/West needle -->
-    <path
-        android:fillColor="#FF000000"
-        android:pathData="M24,54L54,46L84,54L54,62Z" />
-
-    <!-- Center -->
+    <!-- Small flag at mast top -->
     <path
         android:fillColor="#FFFFFFFF"
-        android:pathData="M54,43A11,11 0,1 0,54 65A11,11 0,1 0,54 43" />
+        android:pathData="M54,28 L62,32 L54,36 Z" />
 
-    <!-- Center diamond -->
+    <!-- Front rail post -->
     <path
-        android:fillColor="#FF000000"
-        android:pathData="M54,47L58,54L54,61L50,54Z" />
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2"
+        android:pathData="M32,56 L32,50" />
+
+    <!-- Back rail post -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2"
+        android:pathData="M76,56 L76,50" />
+
+    <!-- Top rail line -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.5"
+        android:pathData="M32,50 L76,50" />
+
+    <!-- Rudder -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.5"
+        android:pathData="M80,56 L80,72" />
+
+    <!-- Rudder blade -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M78,70 L83,70 L82,75 L79,75 Z" />
+
+    <!-- Water waves -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.5"
+        android:pathData="M20,82 C28,78 36,86 44,82 C52,78 60,86 68,82 C76,78 84,86 92,82" />
 
 </vector>
