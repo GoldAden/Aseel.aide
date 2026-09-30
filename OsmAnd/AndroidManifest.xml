@@ -105,12 +105,12 @@
 <activity
     android:name="net.osmand.plus.hawsa.TideActivity"
     android:screenOrientation="portrait"
-    android:theme="@style/AppTheme" />
+    android:theme="@style/Theme.HawsaMain" />
 
 <activity
     android:name="net.osmand.plus.hawsa.MoonActivity"
     android:screenOrientation="portrait"
-    android:theme="@style/AppTheme" />
+    android:theme="@style/Theme.HawsaMain" />
 
 <activity
     android:name="net.osmand.plus.hawsa.CompassActivity"
