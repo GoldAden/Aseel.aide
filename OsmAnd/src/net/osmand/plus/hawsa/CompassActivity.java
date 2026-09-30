@@ -295,7 +295,6 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
     }
 
     @Override
-    @Override
     public void onSensorChanged(SensorEvent event) {
         try {
             if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
