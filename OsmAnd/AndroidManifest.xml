@@ -95,7 +95,7 @@
     android:name="net.osmand.plus.hawsa.HawsaMainActivity"
     android:exported="true"
     android:screenOrientation="portrait"
-    android:theme="@style/AppTheme">
+    android:theme="@style/Theme.HawsaMain">
     <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
