@@ -23,6 +23,11 @@ apply plugin: 'org.jetbrains.kotlin.plugin.compose'
 // Less important
 
 android {
+	// Memory optimization for resource merging
+	aaptOptions {
+		maxProcessCount 1
+	}
+
 	signingConfigs {
 		development {
 			storeFile file("../keystores/debug.keystore")
