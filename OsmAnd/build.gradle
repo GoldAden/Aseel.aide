@@ -24,9 +24,6 @@ apply plugin: 'org.jetbrains.kotlin.plugin.compose'
 
 android {
 	// Memory optimization for resource merging
-	aaptOptions {
-		maxProcessCount 1
-	}
 
 	signingConfigs {
 		development {
