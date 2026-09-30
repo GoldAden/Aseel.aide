@@ -33,11 +33,11 @@ public class HawsaMainActivity extends AppCompatActivity {
 		// Set status bar color to match app theme
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 			getWindow().setStatusBarColor(ContextCompat.getColor(this, net.osmand.plus.R.color.hawsa_status_bar_color));
-			// Light icons on dark status bar
+			// Dark status bar needs light (white) icons
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 				View decor = getWindow().getDecorView();
 				int systemUiFlags = decor.getSystemUiVisibility();
-				systemUiFlags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+				systemUiFlags &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
 				decor.setSystemUiVisibility(systemUiFlags);
 			}
 		}
