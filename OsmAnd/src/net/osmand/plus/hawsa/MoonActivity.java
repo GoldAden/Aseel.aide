@@ -1,7 +1,6 @@
 package net.osmand.plus.hawsa;
 
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 
 import net.osmand.plus.R;
 
@@ -29,14 +28,12 @@ public class MoonActivity extends AppCompatActivity {
     private ImageView[] dayMoons = new ImageView[7];
     private TextView[] dayLabels = new TextView[7];
 
-    // Arabic Hijri month names
     private static final String[] HIJRI_MONTHS = {
             "محرم", "صفر", "ربيع الأول", "ربيع الثاني",
             "جمادى الأولى", "جمادى الثانية", "رجب", "شعبان",
             "رمضان", "شوال", "ذو القعدة", "ذو الحجة"
     };
 
-    // Moon phase names in Arabic
     private static final String[] PHASE_NAMES = {
             "محاق (قمر جديد)",
             "هلال متزايد",
@@ -52,13 +49,15 @@ public class MoonActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Show status bar with dark navy color
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            getWindow().setDecorFitsSystemWindows(false);
-        } else {
-            getWindow().setFlags(
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN
-            );
+            getWindow().setDecorFitsSystemWindows(true);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.hawsa_status_bar_color));
         }
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -71,7 +70,6 @@ public class MoonActivity extends AppCompatActivity {
         tvHijriDate = findViewById(R.id.tv_hijri_date);
         tvGregorianDate = findViewById(R.id.tv_gregorian_date);
 
-        // 7-day forecast
         for (int i = 0; i < 7; i++) {
             int labelId = getResources().getIdentifier("tv_day_" + i, "id", getPackageName());
             int moonId = getResources().getIdentifier("iv_day_moon_" + i, "id", getPackageName());
@@ -90,42 +88,32 @@ public class MoonActivity extends AppCompatActivity {
         double illumination = calculateIllumination(moonAge);
         int phaseIndex = getPhaseIndex(moonAge);
 
-        // Current moon info
         tvMoonPhase.setText(PHASE_NAMES[phaseIndex]);
         tvMoonAge.setText(String.format(Locale.getDefault(), "عمر القمر: %.1f يوم", moonAge));
         tvIllumination.setText(String.format(Locale.getDefault(), "الإضاءة: %.0f%%", illumination * 100));
-
-        // Moon phase icon
         ivMoonIcon.setImageResource(getMoonPhaseDrawable(phaseIndex));
 
-        // Hijri date
         int[] hijri = gregorianToHijri(now.get(Calendar.YEAR),
                 now.get(Calendar.MONTH) + 1,
                 now.get(Calendar.DAY_OF_MONTH));
-
         tvHijriDate.setText(String.format(Locale.getDefault(), "%d %s %d هـ",
                 hijri[0], HIJRI_MONTHS[hijri[1] - 1], hijri[2]));
 
         SimpleDateFormat gregFormat = new SimpleDateFormat("dd MMMM yyyy", new Locale("ar"));
         tvGregorianDate.setText(gregFormat.format(now.getTime()));
 
-        // 7-day forecast
         for (int i = 0; i < 7; i++) {
             Calendar future = (Calendar) now.clone();
             future.add(Calendar.DAY_OF_MONTH, i);
-
             double futureAge = calculateMoonAge(future);
             int futurePhase = getPhaseIndex(futureAge);
-
             SimpleDateFormat dayFormat = new SimpleDateFormat("EEE", new Locale("ar"));
             dayLabels[i].setText(dayFormat.format(future.getTime()));
             dayMoons[i].setImageResource(getMoonPhaseDrawable(futurePhase));
         }
     }
 
-    // Approximate moon age (synodic month = 29.53059 days)
     private double calculateMoonAge(Calendar date) {
-        // Reference: New moon Jan 6, 2000 18:14 UTC
         Calendar ref = Calendar.getInstance();
         ref.set(2000, Calendar.JANUARY, 6, 18, 14, 0);
         double diffMs = date.getTimeInMillis() - ref.getTimeInMillis();
@@ -160,11 +148,9 @@ public class MoonActivity extends AppCompatActivity {
         }
     }
 
-    // Approximate Gregorian to Hijri conversion
     private int[] gregorianToHijri(int year, int month, int day) {
         double jd = gregorianToJD(year, month, day);
         jd = Math.floor(jd) + 0.5;
-
         double l = Math.floor(jd - 1948439.5) + 10632.0;
         double n = Math.floor((l - 0.13375) / 10631.0);
         l = l - Math.floor(n * 10631.0) + 354.0;
@@ -172,33 +158,17 @@ public class MoonActivity extends AppCompatActivity {
                 + Math.floor(l / 5670.0) * Math.floor(43.0 - l / 15269.0);
         l = l - Math.floor(Math.floor(30.0 - j / 15.0) * Math.floor(17719.0 - j / 15.0) * 0.002)
                 + Math.floor(j / 15.0) * 0.5 + 28.5;
-
         int hMonth = (int) Math.floor((l - 1.0) / 29.5) + 1;
         int hDay = (int) l - 29 * (hMonth - 1);
         int hYear = (int) (30.0 * n + j - 30.0);
-
         if (hMonth > 12) hMonth = 12;
-
         return new int[]{hDay, hMonth, hYear};
     }
 
     private double gregorianToJD(int year, int month, int day) {
-        if (month <= 2) {
-            year -= 1;
-            month += 12;
-        }
+        if (month <= 2) { year -= 1; month += 12; }
         double A = Math.floor(year / 100.0);
         double B = 2 - A + Math.floor(A / 4.0);
         return Math.floor(365.25 * (year + 4716)) + Math.floor(30.6001 * (month + 1)) + day + B - 1524.5;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-        decorView.setSystemUiVisibility(uiOptions);
     }
 }
