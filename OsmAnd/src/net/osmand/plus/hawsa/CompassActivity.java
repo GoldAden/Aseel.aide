@@ -295,6 +295,7 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
     }
 
     @Override
+    @Override
     public void onSensorChanged(SensorEvent event) {
         try {
             if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
@@ -306,24 +307,22 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
             if (gravityValues != null && geomagneticValues != null) {
                 boolean success = SensorManager.getRotationMatrix(rotationMatrix, null, gravityValues, geomagneticValues);
                 if (success) {
-                SensorManager.getOrientation(rotationMatrix, orientationValues);
-                float azimuth = (float) Math.toDegrees(orientationValues[0]);
-                if (azimuth < 0) azimuth += 360;
+                    SensorManager.getOrientation(rotationMatrix, orientationValues);
+                    float azimuth = (float) Math.toDegrees(orientationValues[0]);
+                    if (azimuth < 0) azimuth += 360;
 
-                GeomagneticField geoField = new GeomagneticField(
-                        (float) latitude, (float) longitude, (float) altitude,
-                        System.currentTimeMillis());
-                azimuth += geoField.getDeclination();
+                    GeomagneticField geoField = new GeomagneticField(
+                            (float) latitude, (float) longitude, (float) altitude,
+                            System.currentTimeMillis());
+                    azimuth += geoField.getDeclination();
 
-                currentAzimuth = azimuth;
-                compassView.setAzimuth(azimuth);
-                compassView.invalidate();
+                    currentAzimuth = azimuth;
+                    compassView.setAzimuth(azimuth);
+                    compassView.invalidate();
 
-                tvCompassDegree.setText(String.format("%.0f°", azimuth));
+                    tvCompassDegree.setText(String.format("%.0f°", azimuth));
+                }
             }
-        }
-    }
-
         } catch (Exception e) {
             // Sensor change error
         }
