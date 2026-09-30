@@ -1,14 +1,13 @@
 package net.osmand.plus.hawsa;
 
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import net.osmand.plus.R;
 
@@ -24,7 +23,6 @@ public class TideActivity extends AppCompatActivity {
     private TextView tvDate;
     private TextView tvNextTide;
 
-    // Harmonic constants for tide calculation (simplified for major ports)
     private static final double M2_AMPLITUDE = 1.2;
     private static final double S2_AMPLITUDE = 0.45;
     private static final double K1_AMPLITUDE = 0.32;
@@ -38,13 +36,15 @@ public class TideActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Show status bar with dark navy color
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            getWindow().setDecorFitsSystemWindows(false);
-        } else {
-            getWindow().setFlags(
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN
-            );
+            getWindow().setDecorFitsSystemWindows(true);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.hawsa_status_bar_color));
         }
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -78,7 +78,6 @@ public class TideActivity extends AppCompatActivity {
         }
 
         chart.setData(hourList, heightList);
-
         findNextTideEvent(now);
     }
 
@@ -119,15 +118,5 @@ public class TideActivity extends AppCompatActivity {
             lastHeight = height;
             lastRising = rising;
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-        decorView.setSystemUiVisibility(uiOptions);
     }
 }
