@@ -1,12 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp"
-    android:height="24dp"
-    android:viewportWidth="24"
-    android:viewportHeight="24">
+    android:width="56dp"
+    android:height="56dp"
+    android:viewportWidth="56"
+    android:viewportHeight="56">
 
+    <!-- Outer circle -->
+    <path
+        android:fillColor="#3D2B00"
+        android:strokeColor="#FFD700"
+        android:strokeWidth="1.5"
+        android:pathData="M28,4A24,24 0 1,1 27.9,4z" />
+    <!-- Inner ring -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFD700"
+        android:strokeWidth="0.5"
+        android:pathData="M28,9A19,19 0 1,1 27.9,9z" />
+    <!-- North pointer (bright gold) -->
     <path
         android:fillColor="#FFD700"
-        android:pathData="M12,2L14.7,9.3L22,12L14.7,14.7L12,22L9.3,14.7L2,12L9.3,9.3L12,2Z" />
-
+        android:pathData="M28,10L24,28L28,32Z" />
+    <!-- South pointer (dark) -->
+    <path
+        android:fillColor="#8D6E00"
+        android:pathData="M28,10L32,28L28,32Z" />
+    <!-- East pointer -->
+    <path
+        android:fillColor="#D4A000"
+        android:pathData="M28,28L10,24L8,28z" />
+    <!-- West pointer -->
+    <path
+        android:fillColor="#D4A000"
+        android:pathData="M28,28L46,24L48,28z" />
+    <!-- Center dot -->
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M28,25.5A2.5,2.5 0 1,1 27.9,25.5z" />
 </vector>
