@@ -22,7 +22,6 @@ public class HawsaMainActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// ═══ Show status bar with dark navy color ═══
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
 			getWindow().setDecorFitsSystemWindows(true);
 		} else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -43,21 +42,20 @@ public class HawsaMainActivity extends AppCompatActivity {
 
 		setContentView(R.layout.activity_hawsa_main);
 
-		// ═══ Set titles from resources ═══
 		TextView tvTitle = findViewById(R.id.tv_app_title);
 		if (tvTitle != null) tvTitle.setText(R.string.hawsa_app_title);
 
 		TextView tvDesigner = findViewById(R.id.tv_designer);
 		if (tvDesigner != null) tvDesigner.setText(R.string.hawsa_designer_credit);
 
-		// ═══ Navigation with ActivityNotFoundException handling ═══
 		findViewById(R.id.card_map).setOnClickListener(v -> {
 			try {
 				Intent intent = new Intent(this, MapActivity.class);
-				intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 				startActivity(intent);
 			} catch (ActivityNotFoundException e) {
 				Toast.makeText(this, "الخريطة غير متاحة حالياً", Toast.LENGTH_SHORT).show();
+			} catch (Exception e) {
+				Toast.makeText(this, "خطأ في فتح الخريطة", Toast.LENGTH_SHORT).show();
 			}
 		});
 
@@ -85,9 +83,8 @@ public class HawsaMainActivity extends AppCompatActivity {
 			}
 		});
 
-		// Dev card shows about info
 		findViewById(R.id.card_dev).setOnClickListener(v -> {
-			Toast.makeText(this, "تم التصميم بواسطة أصيل صادق\nAseel.aide Developer Edition", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "تم التصميم بواسطة أصل صادق\nAseel.aide Developer Edition", Toast.LENGTH_LONG).show();
 		});
 	}
 }
