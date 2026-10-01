@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/hawsa_bg_dark"
@@ -12,7 +11,6 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Top Bar -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,9 +23,9 @@
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:src="@drawable/ic_arrow_back"
-                android:contentDescription="Back"
+                android:contentDescription="@string/hawsa_compass"
                 android:padding="4dp"
-                app:tint="@color/hawsa_gold" />
+                android:tint="@color/hawsa_gold" />
 
             <TextView
                 android:layout_width="0dp"
@@ -44,222 +42,200 @@
                 android:layout_height="36dp" />
         </LinearLayout>
 
-        <!-- Compass + Qibla Card -->
-        <androidx.cardview.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="6dp"
-            app:cardBackgroundColor="@color/hawsa_card_dark"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="16dp"
+            android:background="@drawable/bg_hawsa_card"
             android:layout_marginBottom="12dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <net.osmand.plus.hawsa.CompassActivity.CompassView
+                android:id="@+id/compass_view"
+                android:layout_width="280dp"
+                android:layout_height="280dp" />
+
+            <TextView
+                android:id="@+id/tv_compass_degree"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:padding="16dp">
+                android:textSize="20sp"
+                android:textColor="@color/palette_neutral_100"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
 
-                <net.osmand.plus.hawsa.CompassActivity.CompassView
-                    android:id="@+id/compass_view"
-                    android:layout_width="280dp"
-                    android:layout_height="280dp" />
+            <TextView
+                android:id="@+id/tv_qibla_direction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/hawsa_green"
+                android:layout_marginTop="4dp" />
 
-                <TextView
-                    android:id="@+id/tv_compass_degree"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:textColor="@color/palette_neutral_100"
-                    android:textStyle="bold"
-                    android:layout_marginTop="8dp" />
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tv_qibla_direction"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:textColor="@color/hawsa_green"
-                    android:layout_marginTop="4dp" />
-
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Prayer Times Card -->
-        <androidx.cardview.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="@color/hawsa_card_dark"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/bg_hawsa_card_prayer"
             android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hawsa_prayer_times"
+                android:textSize="18sp"
+                android:textColor="@color/hawsa_gold"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
 
                 <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/hawsa_fajr"
+                    android:textSize="15sp"
+                    android:textColor="@color/palette_neutral_85" />
+
+                <TextView
+                    android:id="@+id/tv_fajr_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/hawsa_prayer_times"
-                    android:textSize="18sp"
-                    android:textColor="@color/hawsa_gold"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="12dp" />
-
-                <!-- Fajr -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="8dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/hawsa_fajr"
-                        android:textSize="15sp"
-                        android:textColor="@color/palette_neutral_85" />
-
-                    <TextView
-                        android:id="@+id/tv_fajr_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:textColor="@color/palette_neutral_100"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <!-- Sunrise -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="8dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/hawsa_sunrise"
-                        android:textSize="15sp"
-                        android:textColor="@color/palette_neutral_85" />
-
-                    <TextView
-                        android:id="@+id/tv_sunrise_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:textColor="@color/hawsa_orange"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <!-- Dhuhr -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="8dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/hawsa_dhuhr"
-                        android:textSize="15sp"
-                        android:textColor="@color/palette_neutral_85" />
-
-                    <TextView
-                        android:id="@+id/tv_dhuhr_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:textColor="@color/palette_neutral_100"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <!-- Asr -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="8dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/hawsa_asr"
-                        android:textSize="15sp"
-                        android:textColor="@color/palette_neutral_85" />
-
-                    <TextView
-                        android:id="@+id/tv_asr_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:textColor="@color/palette_neutral_100"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <!-- Maghrib -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="8dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/hawsa_maghrib"
-                        android:textSize="15sp"
-                        android:textColor="@color/palette_neutral_85" />
-
-                    <TextView
-                        android:id="@+id/tv_maghrib_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:textColor="@color/hawsa_orange"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <!-- Isha -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/hawsa_isha"
-                        android:textSize="15sp"
-                        android:textColor="@color/palette_neutral_85" />
-
-                    <TextView
-                        android:id="@+id/tv_isha_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:textColor="@color/hawsa_blue"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
+                    android:textSize="16sp"
+                    android:textColor="@color/palette_neutral_100"
+                    android:textStyle="bold" />
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/hawsa_sunrise"
+                    android:textSize="15sp"
+                    android:textColor="@color/palette_neutral_85" />
+
+                <TextView
+                    android:id="@+id/tv_sunrise_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/hawsa_orange"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/hawsa_dhuhr"
+                    android:textSize="15sp"
+                    android:textColor="@color/palette_neutral_85" />
+
+                <TextView
+                    android:id="@+id/tv_dhuhr_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/palette_neutral_100"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/hawsa_asr"
+                    android:textSize="15sp"
+                    android:textColor="@color/palette_neutral_85" />
+
+                <TextView
+                    android:id="@+id/tv_asr_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/palette_neutral_100"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/hawsa_maghrib"
+                    android:textSize="15sp"
+                    android:textColor="@color/palette_neutral_85" />
+
+                <TextView
+                    android:id="@+id/tv_maghrib_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/hawsa_orange"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/hawsa_isha"
+                    android:textSize="15sp"
+                    android:textColor="@color/palette_neutral_85" />
+
+                <TextView
+                    android:id="@+id/tv_isha_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/hawsa_blue"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>
