@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.hardware.GeomagneticField;
@@ -17,6 +18,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.os.Build;
 import android.view.WindowManager;
@@ -34,6 +36,8 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 public class CompassActivity extends AppCompatActivity implements SensorEventListener, LocationListener {
+    private static final String TAG = "HawsaCompass";
+
     private SensorManager sensorManager;
     private Sensor accelerometer;
     private Sensor magnetometer;
@@ -67,6 +71,28 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
     private static final double KAABA_LAT = 21.4225;
     private static final double KAABA_LNG = 39.8262;
 
+    // Hard-coded fallback colors (ARGB)
+    private static final int COLOR_GOLD = 0xFFD700;
+    private static final int COLOR_WHITE = 0xFFFFFF;
+    private static final int COLOR_DEEP = 0xFF0A1628;
+    private static final int COLOR_GREEN = 0xFF00FF88;
+    private static final int COLOR_SOFT_GRAY = 0xFFD6D6DB;
+    private static final int COLOR_RED = 0xFFCF6679;
+    private static final int COLOR_CARD_DARK = 0xFF1A2E4A;
+    private static final int COLOR_BLUE = 0xFF00BFFF;
+    private static final int COLOR_ORANGE = 0xFFFFAA33;
+
+    // Resolved colors
+    private int colorGold = COLOR_GOLD;
+    private int colorWhite = COLOR_WHITE;
+    private int colorDeep = COLOR_DEEP;
+    private int colorGreen = COLOR_GREEN;
+    private int colorSoftGray = COLOR_SOFT_GRAY;
+    private int colorRed = COLOR_RED;
+    private int colorCardDark = COLOR_CARD_DARK;
+    private int colorBlue = COLOR_BLUE;
+    private int colorOrange = COLOR_ORANGE;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +103,11 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.hawsa_status_bar_color));
+            try {
+                getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.hawsa_status_bar_color));
+            } catch (Exception e) {
+                getWindow().setStatusBarColor(COLOR_DEEP);
+            }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 View decor = getWindow().getDecorView();
                 int flags = decor.getSystemUiVisibility();
@@ -86,10 +116,13 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
             }
         }
 
+        resolveColors();
+
         try {
             setContentView(R.layout.activity_compass);
         } catch (Exception e) {
-            Toast.makeText(this, "Error loading compass layout: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            Log.e(TAG, "Failed to load compass layout", e);
+            Toast.makeText(this, "خطأ في تحميل شاشة البوصلة: " + e.getMessage(), Toast.LENGTH_LONG).show();
             finish();
             return;
         }
@@ -123,6 +156,18 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
         calculatePrayerTimes();
     }
 
+    private void resolveColors() {
+        try { colorGold = ContextCompat.getColor(this, R.color.hawsa_gold); } catch (Exception e) { colorGold = COLOR_GOLD; }
+        try { colorWhite = ContextCompat.getColor(this, R.color.palette_neutral_100); } catch (Exception e) { colorWhite = COLOR_WHITE; }
+        try { colorDeep = ContextCompat.getColor(this, R.color.hawsa_bg_dark); } catch (Exception e) { colorDeep = COLOR_DEEP; }
+        try { colorGreen = ContextCompat.getColor(this, R.color.hawsa_green); } catch (Exception e) { colorGreen = COLOR_GREEN; }
+        try { colorSoftGray = ContextCompat.getColor(this, R.color.palette_neutral_85); } catch (Exception e) { colorSoftGray = COLOR_SOFT_GRAY; }
+        try { colorRed = ContextCompat.getColor(this, R.color.palette_red_50); } catch (Exception e) { colorRed = COLOR_RED; }
+        try { colorCardDark = ContextCompat.getColor(this, R.color.hawsa_card_dark); } catch (Exception e) { colorCardDark = COLOR_CARD_DARK; }
+        try { colorBlue = ContextCompat.getColor(this, R.color.hawsa_blue); } catch (Exception e) { colorBlue = COLOR_BLUE; }
+        try { colorOrange = ContextCompat.getColor(this, R.color.hawsa_orange); } catch (Exception e) { colorOrange = COLOR_ORANGE; }
+    }
+
     private void requestLocation() {
         try {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -137,17 +182,20 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
                 try {
                     locationManager.requestSingleUpdate(provider, this, null);
                 } catch (Exception e) {
+                    Log.w(TAG, "Location request failed", e);
                 }
                 Location lastKnown = null;
                 try {
                     lastKnown = locationManager.getLastKnownLocation(provider);
                 } catch (Exception e) {
+                    Log.w(TAG, "Last known location failed", e);
                 }
                 if (lastKnown != null) {
                     updateLocation(lastKnown);
                 }
             }
         } catch (Exception e) {
+            Log.w(TAG, "requestLocation error", e);
         }
     }
 
@@ -187,10 +235,14 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
             qiblaBearing = (float) Math.toDegrees(Math.atan2(x, y));
             if (qiblaBearing < 0) qiblaBearing += 360;
 
-            GeomagneticField geoField = new GeomagneticField(
-                    (float) latitude, (float) longitude, (float) altitude,
-                    System.currentTimeMillis());
-            qiblaBearing -= geoField.getDeclination();
+            try {
+                GeomagneticField geoField = new GeomagneticField(
+                        (float) latitude, (float) longitude, (float) altitude,
+                        System.currentTimeMillis());
+                qiblaBearing -= geoField.getDeclination();
+            } catch (Exception e) {
+                Log.w(TAG, "GeomagneticField error", e);
+            }
 
             if (compassView != null) {
                 compassView.setQiblaBearing(qiblaBearing);
@@ -201,6 +253,7 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
                 tvQiblaDirection.setText(qiblaText);
             }
         } catch (Exception e) {
+            Log.e(TAG, "Qibla calc error", e);
             if (tvQiblaDirection != null) {
                 tvQiblaDirection.setText("\u0627\u062a\u062c\u0627\u0647 \u0627\u0644\u0642\u0628\u0644\u0629: --");
             }
@@ -267,6 +320,7 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
             if (tvMaghribTime != null) tvMaghribTime.setText(formatTime(maghribTime));
             if (tvIshaTime != null) tvIshaTime.setText(formatTime(ishaTime));
         } catch (Exception e) {
+            Log.e(TAG, "Prayer times calc error", e);
             if (tvFajrTime != null) tvFajrTime.setText("--:--");
             if (tvSunriseTime != null) tvSunriseTime.setText("--:--");
             if (tvDhuhrTime != null) tvDhuhrTime.setText("--:--");
@@ -306,6 +360,7 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
                     sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_UI);
             }
         } catch (Exception e) {
+            Log.w(TAG, "Sensor registration error", e);
         }
     }
 
@@ -317,6 +372,7 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
                 sensorManager.unregisterListener(this);
             }
         } catch (Exception e) {
+            Log.w(TAG, "Sensor unregistration error", e);
         }
     }
 
@@ -336,10 +392,14 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
                     float azimuth = (float) Math.toDegrees(orientationValues[0]);
                     if (azimuth < 0) azimuth += 360;
 
-                    GeomagneticField geoField = new GeomagneticField(
-                            (float) latitude, (float) longitude, (float) altitude,
-                            System.currentTimeMillis());
-                    azimuth += geoField.getDeclination();
+                    try {
+                        GeomagneticField geoField = new GeomagneticField(
+                                (float) latitude, (float) longitude, (float) altitude,
+                                System.currentTimeMillis());
+                        azimuth += geoField.getDeclination();
+                    } catch (Exception e) {
+                        Log.w(TAG, "Declination error", e);
+                    }
 
                     currentAzimuth = azimuth;
                     if (compassView != null) {
@@ -352,6 +412,7 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
                 }
             }
         } catch (Exception e) {
+            Log.w(TAG, "Sensor error", e);
         }
     }
 
@@ -367,7 +428,7 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
-    public static class CompassView extends View {
+    public class CompassView extends View {
 
         private float azimuth = 0f;
         private float qiblaBearing = 0f;
@@ -378,7 +439,6 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
         private Paint needlePaint;
         private Paint needleSouthPaint;
         private Paint qiblaPaint;
-        private Paint qiblaArrowPaint;
         private Paint centerPaint;
         private Paint bgPaint;
         private Paint kaabaPaint;
@@ -400,70 +460,54 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
         }
 
         private void init() {
-            try {
-                int gold = ContextCompat.getColor(getContext(), R.color.hawsa_gold);
-                int neutral100 = ContextCompat.getColor(getContext(), R.color.palette_neutral_100);
-                int deep = ContextCompat.getColor(getContext(), R.color.hawsa_bg_dark);
-                int green = ContextCompat.getColor(getContext(), R.color.hawsa_green);
-                int softGray = ContextCompat.getColor(getContext(), R.color.palette_neutral_85);
-                int red = ContextCompat.getColor(getContext(), R.color.palette_red_50);
+            circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            circlePaint.setStyle(Paint.Style.STROKE);
+            circlePaint.setColor(colorGold);
+            circlePaint.setStrokeWidth(3f);
 
-                circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-                circlePaint.setStyle(Paint.Style.STROKE);
-                circlePaint.setColor(gold);
-                circlePaint.setStrokeWidth(3f);
+            tickPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            tickPaint.setStyle(Paint.Style.STROKE);
+            tickPaint.setColor(colorGold);
+            tickPaint.setStrokeWidth(3f);
 
-                tickPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-                tickPaint.setStyle(Paint.Style.STROKE);
-                tickPaint.setColor(gold);
-                tickPaint.setStrokeWidth(3f);
+            tickMinorPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            tickMinorPaint.setStyle(Paint.Style.STROKE);
+            tickMinorPaint.setColor(colorSoftGray);
+            tickMinorPaint.setStrokeWidth(1.5f);
 
-                tickMinorPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-                tickMinorPaint.setStyle(Paint.Style.STROKE);
-                tickMinorPaint.setColor(softGray);
-                tickMinorPaint.setStrokeWidth(1.5f);
+            textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            textPaint.setColor(colorWhite);
+            textPaint.setTextSize(36f);
+            textPaint.setTextAlign(Paint.Align.CENTER);
+            textPaint.setFakeBoldText(true);
 
-                textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-                textPaint.setColor(neutral100);
-                textPaint.setTextSize(36f);
-                textPaint.setTextAlign(Paint.Align.CENTER);
-                textPaint.setFakeBoldText(true);
+            needlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            needlePaint.setColor(colorRed);
+            needlePaint.setStyle(Paint.Style.FILL);
 
-                needlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-                needlePaint.setColor(red);
-                needlePaint.setStyle(Paint.Style.FILL);
+            needleSouthPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            needleSouthPaint.setColor(colorWhite);
+            needleSouthPaint.setStyle(Paint.Style.FILL);
 
-                needleSouthPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-                needleSouthPaint.setColor(neutral100);
-                needleSouthPaint.setStyle(Paint.Style.FILL);
+            qiblaPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            qiblaPaint.setColor(colorGreen);
+            qiblaPaint.setStyle(Paint.Style.FILL);
 
-                qiblaPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-                qiblaPaint.setColor(green);
-                qiblaPaint.setStyle(Paint.Style.FILL);
+            centerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            centerPaint.setColor(colorGold);
+            centerPaint.setStyle(Paint.Style.FILL);
 
-                qiblaArrowPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-                qiblaArrowPaint.setColor(green);
-                qiblaArrowPaint.setStyle(Paint.Style.STROKE);
-                qiblaArrowPaint.setStrokeWidth(3f);
+            bgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            bgPaint.setColor(colorDeep);
+            bgPaint.setStyle(Paint.Style.FILL);
 
-                centerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-                centerPaint.setColor(gold);
-                centerPaint.setStyle(Paint.Style.FILL);
+            kaabaPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            kaabaPaint.setColor(colorGreen);
+            kaabaPaint.setTextSize(22f);
+            kaabaPaint.setTextAlign(Paint.Align.CENTER);
+            kaabaPaint.setFakeBoldText(true);
 
-                bgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-                bgPaint.setColor(deep);
-                bgPaint.setStyle(Paint.Style.FILL);
-
-                kaabaPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-                kaabaPaint.setColor(green);
-                kaabaPaint.setTextSize(22f);
-                kaabaPaint.setTextAlign(Paint.Align.CENTER);
-                kaabaPaint.setFakeBoldText(true);
-
-                initialized = true;
-            } catch (Exception e) {
-                initialized = false;
-            }
+            initialized = true;
         }
 
         public void setAzimuth(float az) {
@@ -515,7 +559,7 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
                 float ty = cy - labelR * (float) Math.cos(rad);
                 Paint dirPaint = new Paint(textPaint);
                 if (cardinals[i].equals("N")) {
-                    dirPaint.setColor(ContextCompat.getColor(getContext(), R.color.palette_red_50));
+                    dirPaint.setColor(colorRed);
                     dirPaint.setTextSize(42f);
                 }
                 canvas.drawText(cardinals[i], tx, ty + dirPaint.getTextSize() / 3, dirPaint);
@@ -541,11 +585,6 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
             qiblaPath.lineTo(bx2, by2);
             qiblaPath.close();
             canvas.drawPath(qiblaPath, qiblaPaint);
-
-            float kaabaR = radius - 62;
-            float kaabaX = cx + kaabaR * (float) Math.sin(qRad);
-            float kaabaY = cy - kaabaR * (float) Math.cos(qRad);
-            canvas.drawText("\uD83D\uDD4B", kaabaX, kaabaY + 8, kaabaPaint);
 
             canvas.restore();
 
