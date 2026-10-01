@@ -82,16 +82,16 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
     private static final int COLOR_BLUE = 0xFF00BFFF;
     private static final int COLOR_ORANGE = 0xFFFFAA33;
 
-    // Resolved colors
-    private int colorGold = COLOR_GOLD;
-    private int colorWhite = COLOR_WHITE;
-    private int colorDeep = COLOR_DEEP;
-    private int colorGreen = COLOR_GREEN;
-    private int colorSoftGray = COLOR_SOFT_GRAY;
-    private int colorRed = COLOR_RED;
-    private int colorCardDark = COLOR_CARD_DARK;
-    private int colorBlue = COLOR_BLUE;
-    private int colorOrange = COLOR_ORANGE;
+    // Resolved colors (passed to CompassView)
+    int resolvedGold = COLOR_GOLD;
+    int resolvedWhite = COLOR_WHITE;
+    int resolvedDeep = COLOR_DEEP;
+    int resolvedGreen = COLOR_GREEN;
+    int resolvedSoftGray = COLOR_SOFT_GRAY;
+    int resolvedRed = COLOR_RED;
+    int resolvedCardDark = COLOR_CARD_DARK;
+    int resolvedBlue = COLOR_BLUE;
+    int resolvedOrange = COLOR_ORANGE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +130,11 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         compassView = findViewById(R.id.compass_view);
+        // Pass resolved colors to the static CompassView
+        if (compassView != null) {
+            compassView.setColors(resolvedGold, resolvedWhite, resolvedDeep, resolvedGreen,
+                    resolvedSoftGray, resolvedRed, resolvedCardDark, resolvedBlue, resolvedOrange);
+        }
         tvCompassDegree = findViewById(R.id.tv_compass_degree);
         tvQiblaDirection = findViewById(R.id.tv_qibla_direction);
         tvFajrTime = findViewById(R.id.tv_fajr_time);
@@ -157,15 +162,15 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
     }
 
     private void resolveColors() {
-        try { colorGold = ContextCompat.getColor(this, R.color.hawsa_gold); } catch (Exception e) { colorGold = COLOR_GOLD; }
-        try { colorWhite = ContextCompat.getColor(this, R.color.palette_neutral_100); } catch (Exception e) { colorWhite = COLOR_WHITE; }
-        try { colorDeep = ContextCompat.getColor(this, R.color.hawsa_bg_dark); } catch (Exception e) { colorDeep = COLOR_DEEP; }
-        try { colorGreen = ContextCompat.getColor(this, R.color.hawsa_green); } catch (Exception e) { colorGreen = COLOR_GREEN; }
-        try { colorSoftGray = ContextCompat.getColor(this, R.color.palette_neutral_85); } catch (Exception e) { colorSoftGray = COLOR_SOFT_GRAY; }
-        try { colorRed = ContextCompat.getColor(this, R.color.palette_red_50); } catch (Exception e) { colorRed = COLOR_RED; }
-        try { colorCardDark = ContextCompat.getColor(this, R.color.hawsa_card_dark); } catch (Exception e) { colorCardDark = COLOR_CARD_DARK; }
-        try { colorBlue = ContextCompat.getColor(this, R.color.hawsa_blue); } catch (Exception e) { colorBlue = COLOR_BLUE; }
-        try { colorOrange = ContextCompat.getColor(this, R.color.hawsa_orange); } catch (Exception e) { colorOrange = COLOR_ORANGE; }
+        try { resolvedGold = ContextCompat.getColor(this, R.color.hawsa_gold); } catch (Exception e) { resolvedGold = COLOR_GOLD; }
+        try { resolvedWhite = ContextCompat.getColor(this, R.color.palette_neutral_100); } catch (Exception e) { resolvedWhite = COLOR_WHITE; }
+        try { resolvedDeep = ContextCompat.getColor(this, R.color.hawsa_bg_dark); } catch (Exception e) { resolvedDeep = COLOR_DEEP; }
+        try { resolvedGreen = ContextCompat.getColor(this, R.color.hawsa_green); } catch (Exception e) { resolvedGreen = COLOR_GREEN; }
+        try { resolvedSoftGray = ContextCompat.getColor(this, R.color.palette_neutral_85); } catch (Exception e) { resolvedSoftGray = COLOR_SOFT_GRAY; }
+        try { resolvedRed = ContextCompat.getColor(this, R.color.palette_red_50); } catch (Exception e) { resolvedRed = COLOR_RED; }
+        try { resolvedCardDark = ContextCompat.getColor(this, R.color.hawsa_card_dark); } catch (Exception e) { resolvedCardDark = COLOR_CARD_DARK; }
+        try { resolvedBlue = ContextCompat.getColor(this, R.color.hawsa_blue); } catch (Exception e) { resolvedBlue = COLOR_BLUE; }
+        try { resolvedOrange = ContextCompat.getColor(this, R.color.hawsa_orange); } catch (Exception e) { resolvedOrange = COLOR_ORANGE; }
     }
 
     private void requestLocation() {
@@ -249,13 +254,13 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
             }
 
             if (tvQiblaDirection != null) {
-                String qiblaText = String.format(java.util.Locale.US, "\u0627\u062a\u062c\u0627\u0647 \u0627\u0644\u0642\u0628\u0644\u0629: %.1f\u00b0", qiblaBearing);
+                String qiblaText = String.format(java.util.Locale.US, "اتجاه القبلة: %.1f°", qiblaBearing);
                 tvQiblaDirection.setText(qiblaText);
             }
         } catch (Exception e) {
             Log.e(TAG, "Qibla calc error", e);
             if (tvQiblaDirection != null) {
-                tvQiblaDirection.setText("\u0627\u062a\u062c\u0627\u0647 \u0627\u0644\u0642\u0628\u0644\u0629: --");
+                tvQiblaDirection.setText("اتجاه القبلة: --");
             }
         }
     }
@@ -407,7 +412,7 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
                         compassView.invalidate();
                     }
                     if (tvCompassDegree != null) {
-                        tvCompassDegree.setText(String.format(java.util.Locale.US, "%.0f\u00b0", azimuth));
+                        tvCompassDegree.setText(String.format(java.util.Locale.US, "%.0f°", azimuth));
                     }
                 }
             }
@@ -428,7 +433,11 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
-    public class CompassView extends View {
+    /**
+     * CompassView is now a PUBLIC STATIC inner class so that the Android LayoutInflater
+     * can instantiate it from XML without needing a reference to the outer CompassActivity.
+     */
+    public static class CompassView extends View {
 
         private float azimuth = 0f;
         private float qiblaBearing = 0f;
@@ -443,6 +452,17 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
         private Paint bgPaint;
         private Paint kaabaPaint;
         private boolean initialized = false;
+
+        // Colors (set via setColors)
+        private int colorGold = 0xFFD700;
+        private int colorWhite = 0xFFFFFF;
+        private int colorDeep = 0xFF0A1628;
+        private int colorGreen = 0xFF00FF88;
+        private int colorSoftGray = 0xFFD6D6DB;
+        private int colorRed = 0xFFCF6679;
+        private int colorCardDark = 0xFF1A2E4A;
+        private int colorBlue = 0xFF00BFFF;
+        private int colorOrange = 0xFFFFAA33;
 
         public CompassView(Context context) {
             super(context);
@@ -508,6 +528,34 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
             kaabaPaint.setFakeBoldText(true);
 
             initialized = true;
+        }
+
+        /** Called from CompassActivity.onCreate after inflation, to apply resolved colors */
+        public void setColors(int gold, int white, int deep, int green,
+                              int softGray, int red, int cardDark, int blue, int orange) {
+            this.colorGold = gold;
+            this.colorWhite = white;
+            this.colorDeep = deep;
+            this.colorGreen = green;
+            this.colorSoftGray = softGray;
+            this.colorRed = red;
+            this.colorCardDark = cardDark;
+            this.colorBlue = blue;
+            this.colorOrange = orange;
+
+            // Re-apply colors to paints
+            if (circlePaint != null) circlePaint.setColor(gold);
+            if (tickPaint != null) tickPaint.setColor(gold);
+            if (tickMinorPaint != null) tickMinorPaint.setColor(softGray);
+            if (textPaint != null) textPaint.setColor(white);
+            if (needlePaint != null) needlePaint.setColor(red);
+            if (needleSouthPaint != null) needleSouthPaint.setColor(white);
+            if (qiblaPaint != null) qiblaPaint.setColor(green);
+            if (centerPaint != null) centerPaint.setColor(gold);
+            if (bgPaint != null) bgPaint.setColor(deep);
+            if (kaabaPaint != null) kaabaPaint.setColor(green);
+
+            invalidate();
         }
 
         public void setAzimuth(float az) {
