@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import net.osmand.plus.OsmandApplication;
 import net.osmand.plus.R;
 import net.osmand.plus.activities.MapActivity;
 
@@ -50,8 +53,26 @@ public class HawsaMainActivity extends AppCompatActivity {
 
 		findViewById(R.id.card_map).setOnClickListener(v -> {
 			try {
-				Intent intent = new Intent(this, MapActivity.class);
-				startActivity(intent);
+				OsmandApplication app = (OsmandApplication) getApplicationContext();
+				if (app.isApplicationInitializing()) {
+					// Wait for app initialization before launching map
+					new Handler(Looper.getMainLooper()).postDelayed(() -> {
+						try {
+							OsmandApplication app2 = (OsmandApplication) getApplicationContext();
+							if (!app2.isApplicationInitializing()) {
+								app2.getSettings().setMapLocationToShow(19.4431, 40.5167, 10);
+								MapActivity.launchMapActivityMoveToTop(HawsaMainActivity.this);
+							} else {
+								Toast.makeText(this, "يرجى الانتظار حتى تكتمل تهيئة التطبيق", Toast.LENGTH_SHORT).show();
+							}
+						} catch (Exception e) {
+							Toast.makeText(this, "خطأ في فتح الخريطة", Toast.LENGTH_SHORT).show();
+						}
+					}, 500);
+				} else {
+					app.getSettings().setMapLocationToShow(19.4431, 40.5167, 10);
+					MapActivity.launchMapActivityMoveToTop(this);
+				}
 			} catch (ActivityNotFoundException e) {
 				Toast.makeText(this, "الخريطة غير متاحة حالياً", Toast.LENGTH_SHORT).show();
 			} catch (Exception e) {
@@ -73,7 +94,7 @@ public class HawsaMainActivity extends AppCompatActivity {
 			try {
 				startActivity(new Intent(this, MoonActivity.class));
 			} catch (ActivityNotFoundException e) {
-				Toast.makeText(this, "القمر غير متاح حالياً", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "القمر غير متاح", Toast.LENGTH_SHORT).show();
 			} catch (Exception e) {
 				Toast.makeText(this, "خطأ في فتح القمر", Toast.LENGTH_SHORT).show();
 			}
