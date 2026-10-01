@@ -147,6 +147,11 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
 
         if (btnCompassBack != null) {
             btnCompassBack.setOnClickListener(v -> finish());
+            try {
+                btnCompassBack.setColorFilter(ContextCompat.getColor(this, R.color.hawsa_gold), android.graphics.PorterDuff.Mode.SRC_IN);
+            } catch (Exception e) {
+                btnCompassBack.setColorFilter(COLOR_GOLD, android.graphics.PorterDuff.Mode.SRC_IN);
+            }
         }
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
