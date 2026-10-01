@@ -151,7 +151,7 @@ public class Version {
 	}
 
 	public static boolean isFreeVersion(@NonNull OsmandApplication app) {
-		return CollectionUtils.equalsToAny(app.getPackageName(), FREE_VERSION_NAME, FREE_DEV_VERSION_NAME) || isHuawei();
+		return CollectionUtils.equalsToAny(app.getPackageName(), FREE_VERSION_NAME) || isHuawei();
 	}
 
 	public static boolean isFullVersion(@NonNull OsmandApplication app) {
