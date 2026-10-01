@@ -64,6 +64,8 @@ public class HawsaMainActivity extends AppCompatActivity {
 				startActivity(new Intent(this, TideActivity.class));
 			} catch (ActivityNotFoundException e) {
 				Toast.makeText(this, "المد والجزر غير متاح حالياً", Toast.LENGTH_SHORT).show();
+			} catch (Exception e) {
+				Toast.makeText(this, "خطأ في فتح المد والجزر", Toast.LENGTH_SHORT).show();
 			}
 		});
 
@@ -72,6 +74,8 @@ public class HawsaMainActivity extends AppCompatActivity {
 				startActivity(new Intent(this, MoonActivity.class));
 			} catch (ActivityNotFoundException e) {
 				Toast.makeText(this, "القمر غير متاح حالياً", Toast.LENGTH_SHORT).show();
+			} catch (Exception e) {
+				Toast.makeText(this, "خطأ في فتح القمر", Toast.LENGTH_SHORT).show();
 			}
 		});
 
@@ -80,11 +84,9 @@ public class HawsaMainActivity extends AppCompatActivity {
 				startActivity(new Intent(this, CompassActivity.class));
 			} catch (ActivityNotFoundException e) {
 				Toast.makeText(this, "البوصلة غير متاحة حالياً", Toast.LENGTH_SHORT).show();
+			} catch (Exception e) {
+				Toast.makeText(this, "خطأ في فتح البوصلة", Toast.LENGTH_SHORT).show();
 			}
-		});
-
-		findViewById(R.id.card_dev).setOnClickListener(v -> {
-			Toast.makeText(this, "تم التصميم بواسطة أصل صادق\nAseel.aide Developer Edition", Toast.LENGTH_LONG).show();
 		});
 	}
 }
