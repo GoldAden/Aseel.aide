@@ -24,8 +24,7 @@
                 android:layout_height="36dp"
                 android:src="@drawable/ic_arrow_back"
                 android:contentDescription="@string/hawsa_compass"
-                android:padding="4dp"
-                android:tint="@color/hawsa_gold" />
+                android:padding="4dp" />
 
             <TextView
                 android:layout_width="0dp"
@@ -51,7 +50,7 @@
             android:background="@drawable/bg_hawsa_card"
             android:layout_marginBottom="12dp">
 
-            <net.osmand.plus.hawsa.CompassActivity.CompassView
+            <net.osmand.plus.hawsa.CompassActivity$CompassView
                 android:id="@+id/compass_view"
                 android:layout_width="280dp"
                 android:layout_height="280dp" />
