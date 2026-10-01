@@ -56,7 +56,7 @@
         </RelativeLayout>
 
         <!-- ═══════════════════════════════════════════ -->
-        <!--  HERO: Map Card                           -->
+        <!--  HERO: Map Card with icon                  -->
         <!-- ═══════════════════════════════════════════ -->
         <RelativeLayout
             android:id="@+id/card_map"
@@ -69,16 +69,16 @@
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground">
 
-            <!-- Top-right map icon -->
+            <!-- Map icon top-right large -->
             <ImageView
-                android:layout_width="44dp"
-                android:layout_height="44dp"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
                 android:src="@drawable/hawsa_icon_map"
-                android:alpha="0.4"
+                android:alpha="0.7"
                 android:contentDescription="Map" />
 
             <!-- Bottom text content -->
@@ -149,7 +149,7 @@
         </RelativeLayout>
 
         <!-- ═══════════════════════════════════════════ -->
-        <!--  2×2 FEATURE GRID (3 cards, no dev card)  -->
+        <!--  2×2 FEATURE GRID                         -->
         <!-- ═══════════════════════════════════════════ -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -161,11 +161,10 @@
             <LinearLayout
                 android:id="@+id/card_tides"
                 android:layout_width="0dp"
-                android:layout_height="170dp"
+                android:layout_height="180dp"
                 android:layout_weight="1"
                 android:layout_marginEnd="6dp"
                 android:orientation="vertical"
-                android:gravity="center"
                 android:background="@drawable/hawsa_card_tide_bg"
                 android:elevation="6dp"
                 android:clickable="true"
@@ -173,47 +172,55 @@
                 android:foreground="?attr/selectableItemBackground"
                 android:padding="14dp">
 
-                <!-- Top accent line -->
-                <View
-                    android:layout_width="30dp"
-                    android:layout_height="3dp"
-                    android:background="#4DB6AC"
-                    android:layout_marginBottom="14dp" />
+                <!-- Wave icon top area -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/hawsa_icon_tide"
-                    android:contentDescription="Tides" />
+                    <ImageView
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:src="@drawable/hawsa_icon_tide"
+                        android:contentDescription="Tides" />
 
+                    <!-- Top accent line -->
+                    <View
+                        android:layout_width="30dp"
+                        android:layout_height="3dp"
+                        android:background="#4DB6AC"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+
+                <!-- Text at bottom -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="المد والجزر"
                     android:textColor="#FFFFFF"
-                    android:textSize="15sp"
-                    android:fontFamily="sans-serif-medium"
-                    android:layout_marginTop="12dp" />
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif-medium" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="بيانات المد اليومية"
                     android:textColor="#80CBC4"
-                    android:textSize="10sp"
+                    android:textSize="11sp"
                     android:fontFamily="sans-serif"
-                    android:layout_marginTop="3dp" />
+                    android:layout_marginTop="2dp" />
             </LinearLayout>
 
             <!-- ──── MOON CARD ──── -->
             <LinearLayout
                 android:id="@+id/card_moon"
                 android:layout_width="0dp"
-                android:layout_height="170dp"
+                android:layout_height="180dp"
                 android:layout_weight="1"
                 android:layout_marginStart="6dp"
                 android:orientation="vertical"
-                android:gravity="center"
                 android:background="@drawable/hawsa_card_moon_bg"
                 android:elevation="6dp"
                 android:clickable="true"
@@ -221,36 +228,45 @@
                 android:foreground="?attr/selectableItemBackground"
                 android:padding="14dp">
 
-                <!-- Top accent line -->
-                <View
-                    android:layout_width="30dp"
-                    android:layout_height="3dp"
-                    android:background="#FF9800"
-                    android:layout_marginBottom="14dp" />
+                <!-- Moon icon top area -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/hawsa_icon_moon"
-                    android:contentDescription="Moon" />
+                    <ImageView
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:src="@drawable/hawsa_icon_moon"
+                        android:contentDescription="Moon" />
 
+                    <!-- Top accent line -->
+                    <View
+                        android:layout_width="30dp"
+                        android:layout_height="3dp"
+                        android:background="#FF9800"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+
+                <!-- Text at bottom -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="القمر"
                     android:textColor="#FFFFFF"
-                    android:textSize="15sp"
-                    android:fontFamily="sans-serif-medium"
-                    android:layout_marginTop="12dp" />
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif-medium" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="أطوار القمر والرؤية"
                     android:textColor="#CE93D8"
-                    android:textSize="10sp"
+                    android:textSize="11sp"
                     android:fontFamily="sans-serif"
-                    android:layout_marginTop="3dp" />
+                    android:layout_marginTop="2dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -258,9 +274,8 @@
         <LinearLayout
             android:id="@+id/card_compass"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="180dp"
             android:orientation="vertical"
-            android:gravity="center"
             android:background="@drawable/hawsa_card_compass_bg"
             android:elevation="6dp"
             android:clickable="true"
@@ -268,36 +283,45 @@
             android:foreground="?attr/selectableItemBackground"
             android:padding="14dp">
 
-            <!-- Top accent line -->
-            <View
-                android:layout_width="30dp"
-                android:layout_height="3dp"
-                android:background="#FFD700"
-                android:layout_marginBottom="14dp" />
+            <!-- Compass icon top area -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/hawsa_icon_compass"
-                android:contentDescription="Compass" />
+                <ImageView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/hawsa_icon_compass"
+                    android:contentDescription="Compass" />
 
+                <!-- Top accent line -->
+                <View
+                    android:layout_width="30dp"
+                    android:layout_height="3dp"
+                    android:background="#FFD700"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+            <!-- Text at bottom -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="البوصلة"
                 android:textColor="#FFFFFF"
-                android:textSize="15sp"
-                android:fontFamily="sans-serif-medium"
-                android:layout_marginTop="12dp" />
+                android:textSize="16sp"
+                android:fontFamily="sans-serif-medium" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="اتجاه الشمال والقبلة"
                 android:textColor="#FFE082"
-                android:textSize="10sp"
+                android:textSize="11sp"
                 android:fontFamily="sans-serif"
-                android:layout_marginTop="3dp" />
+                android:layout_marginTop="2dp" />
         </LinearLayout>
 
         <!-- ═══════════════════════════════════════════ -->
