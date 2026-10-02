@@ -111,7 +111,9 @@ public class Version {
 
 	public static String getFullVersion(@NonNull OsmandApplication app) {
 		Version version = getVersion(app);
-		return version.appName + " " + version.appVersion;
+		// Use "OsmAnd" instead of Arabic app name to ensure ASCII-safe
+		// User-Agent headers and URL parameters work correctly
+		return "OsmAnd" + " " + version.appVersion;
 	}
 
 	public static String getAppVersion(@NonNull OsmandApplication app) {
@@ -195,11 +197,13 @@ public class Version {
 	}
 
 	public static String getVersionForTracker(@NonNull OsmandApplication app) {
-		String v = getAppName(app);
+		// Use "OsmAnd" prefix to ensure server-side compatibility
+		// and ASCII-safe URL parameters and User-Agent headers
+		String v = "OsmAnd";
 		if (isProductionVersion(app)) {
 			v = getFullVersion(app);
 		} else {
-			v += " test";
+			v += " " + getAppVersion(app) + " test";
 		}
 		return v;
 	}
