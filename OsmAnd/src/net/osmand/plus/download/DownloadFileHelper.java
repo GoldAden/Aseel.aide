@@ -91,6 +91,9 @@ public class DownloadFileHelper {
 							notFound = true;
 							break;
 						}
+						if (conn.getResponseCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
+							throw new IOException("Server rejected download request (HTTP 400). Check app version string."); //$NON-NLS-1$
+						}
 						if ((conn.getResponseCode() != HttpURLConnection.HTTP_PARTIAL  && 
 								conn.getResponseCode() != HttpURLConnection.HTTP_OK ) || wifiConnectionBroken) {
 							conn.disconnect();
