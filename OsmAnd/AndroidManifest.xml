@@ -75,6 +75,9 @@
 		<package android:name="com.android.gpstest.osmdroid" />
 		<package android:name="com.dsi.ant.plugins.antplus" />
 
+		<!-- Organic Maps (Al-Haswa-Magellan-) -->
+		<package android:name="app.organicmaps" />
+
 		<intent>
 			<action android:name="android.intent.action.TTS_SERVICE" />
 		</intent>
