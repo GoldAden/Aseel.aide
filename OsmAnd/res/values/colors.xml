@@ -805,4 +805,21 @@
     <color name="hawsa_green">#00FF88</color>
     <color name="hawsa_orange">#FFAA33</color>
     <color name="hawsa_status_bar_color">#0A1628</color>
+
+    <!-- Dalil Yemen Theme Colors -->
+    <color name="dalil_bg">#0F1923</color>
+    <color name="dalil_surface">#172A3A</color>
+    <color name="dalil_primary">#4FC3F7</color>
+    <color name="dalil_accent">#26A69A</color>
+    <color name="dalil_text_primary">#E8EDF2</color>
+    <color name="dalil_text_secondary">#7B8FA1</color>
+    <color name="dalil_text_hint">#99AABB</color>
+    <color name="dalil_hint">#556677</color>
+    <color name="dalil_status_bar_color">#0F1923</color>
+    <color name="dalil_card_restaurant">#1B3A2A</color>
+    <color name="dalil_card_pharmacy">#2A1B3A</color>
+    <color name="dalil_card_hospital">#1B2A3A</color>
+    <color name="dalil_card_fuel">#3A2A1B</color>
+    <color name="dalil_card_workshop">#2A3A1B</color>
+    <color name="dalil_card_store">#1B3A3A</color>
 </resources>

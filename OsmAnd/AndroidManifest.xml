@@ -96,6 +96,14 @@
     android:exported="true"
     android:screenOrientation="portrait"
     android:theme="@style/Theme.HawsaMain">
+</activity>
+
+<!-- Dalil Yemen Launcher Activity -->
+<activity
+    android:name="net.osmand.plus.dalil.DalilYemenActivity"
+    android:exported="true"
+    android:screenOrientation="portrait"
+    android:theme="@style/Theme.DalilYemen">
     <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />

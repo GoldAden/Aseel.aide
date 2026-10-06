@@ -5863,4 +5863,20 @@ Download tile maps directly, or copy them as SQLite database files to OsmAnd\'s 
 <string name="hawsa_asr">العصر</string>
 <string name="hawsa_maghrib">المغرب</string>
 <string name="hawsa_isha">العشاء</string>
+
+    <!-- Dalil Yemen Strings -->
+    <string name="dalil_app_title">دليل اليمن</string>
+    <string name="dalil_subtitle">اكتشف أفضل الأماكن حولك</string>
+    <string name="dalil_search_hint">ابحث عن مطعم، صيدلية، مستشفى...</string>
+    <string name="dalil_near_me">بالقرب مني</string>
+    <string name="dalil_restaurants">مطاعم</string>
+    <string name="dalil_pharmacies">صيدليات</string>
+    <string name="dalil_hospitals">مستشفيات</string>
+    <string name="dalil_fuel">محطات وقود</string>
+    <string name="dalil_workshops">ورش</string>
+    <string name="dalil_stores">محلات</string>
+    <string name="dalil_footer_credit">دليل اليمن © ٢٠٢٦</string>
+    <string name="dalil_error_map">خطأ في تحميل الخريطة</string>
+    <string name="dalil_search_empty">لا توجد نتائج</string>
+    <string name="dalil_popular_places">أماكن رائجة</string>
 </resources>

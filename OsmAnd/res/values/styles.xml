@@ -592,4 +592,18 @@
         <item name="android:windowLightStatusBar">false</item>
     </style>
 
+    <!-- Dalil Yemen Theme -->
+    <style name="Theme.DalilYemen" parent="@style/AppTheme">
+        <item name="android:windowBackground">@color/dalil_bg</item>
+        <item name="android:statusBarColor">@color/dalil_status_bar_color</item>
+        <item name="android:navigationBarColor">@color/dalil_bg</item>
+        <item name="android:colorPrimary">@color/dalil_primary</item>
+        <item name="android:colorPrimaryDark">@color/dalil_status_bar_color</item>
+        <item name="android:colorAccent">@color/dalil_accent</item>
+        <item name="android:textColorPrimary">@color/dalil_text_primary</item>
+        <item name="android:textColorSecondary">@color/dalil_text_secondary</item>
+        <item name="android:textColorHint">@color/dalil_text_hint</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
 </resources>
